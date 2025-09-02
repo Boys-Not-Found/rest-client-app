@@ -1,2 +1,3 @@
-npm test
+#!/bin/sh
+echo "🍀 Running pre-commit hooks..."
 npx lint-staged

@@ -1,0 +1,5 @@
+{
+  "*.{ts,tsx}": ["npm run format:fix", "npm run lint:fix"],
+  "*.{css,scss}": ["npm run scss:fix"],
+  "*.{test,spec}.{ts,tsx}": ["npm run test"]
+}
