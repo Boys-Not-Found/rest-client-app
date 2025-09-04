@@ -55,52 +55,58 @@ export default function SignInPage() {
   };
 
   return (
-    <main className="mx-auto max-w-sm p-6">
-      <h1 className="mb-4 text-2xl text-center font-semibold">Sign in</h1>
+    <main className="flex min-h-screen flex-col items-center justify-center bg-gray-50 p-6">
+      <div className="w-full max-w-sm bg-white p-8 rounded-2xl shadow-md">
+        <h1 className="mb-6 text-2xl text-center font-semibold">Sign in</h1>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
-        <div>
-          <input
-            type="email"
-            placeholder="Email"
-            className="w-full rounded-xl border p-3"
-            {...register('email')}
-          />
-          {errors.email && <p className="text-sm text-red-600">{errors.email.message}</p>}
-        </div>
-        <div>
-          <input
-            type="password"
-            placeholder="Password"
-            className="w-full rounded-xl border p-3"
-            {...register('password')}
-          />
-          {errors.password && <p className="text-sm text-red-600">{errors.password.message}</p>}
-        </div>
-        <button
-          disabled={isSubmitting}
-          className="w-full rounded-xl bg-black p-3 text-white disabled:opacity-60 cursor-pointer"
-        >
-          {isSubmitting ? 'Signing in…' : 'Sign in'}
-        </button>
-      </form>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <div>
+            <input
+              type="email"
+              placeholder="Email"
+              className="w-full rounded-xl border border-gray-300 p-3 focus:border-black focus:ring-1 focus:ring-black outline-none"
+              {...register('email')}
+            />
+            {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>}
+          </div>
 
-      <div className="mt-6 flex justify-center">
-        <button
-          onClick={handleGoogleSignIn}
-          className="flex w-full items-center justify-center gap-2 rounded-xl border p-3 hover:bg-gray-50"
-        >
-          <FcGoogle className="text-xl" />
-          <span>Sign in with Google</span>
-        </button>
+          <div>
+            <input
+              type="password"
+              placeholder="Password"
+              className="w-full rounded-xl border border-gray-300 p-3 focus:border-black focus:ring-1 focus:ring-black outline-none"
+              {...register('password')}
+            />
+            {errors.password && (
+              <p className="mt-1 text-sm text-red-600">{errors.password.message}</p>
+            )}
+          </div>
+
+          <button
+            disabled={isSubmitting}
+            className="w-full rounded-xl bg-black p-3 text-white disabled:opacity-60 hover:bg-gray-800 transition-colors"
+          >
+            {isSubmitting ? 'Signing in…' : 'Sign in'}
+          </button>
+        </form>
+
+        <div className="mt-6">
+          <button
+            onClick={handleGoogleSignIn}
+            className="flex w-full items-center justify-center gap-2 rounded-xl border border-gray-300 p-3 hover:bg-gray-100 transition-colors"
+          >
+            <FcGoogle className="text-xl" />
+            <span>Sign in with Google</span>
+          </button>
+        </div>
+
+        <p className="mt-4 text-center text-sm text-gray-600">
+          No account?{' '}
+          <a className="underline text-black" href="/auth/sign-up">
+            Create one
+          </a>
+        </p>
       </div>
-
-      <p className="mt-4 text-sm">
-        No account?{' '}
-        <a className="underline" href="/auth/sign-up">
-          Create one
-        </a>
-      </p>
     </main>
   );
 }
