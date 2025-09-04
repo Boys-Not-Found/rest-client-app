@@ -1,0 +1,7 @@
+{
+  "home": { "hello": "Hello, world!" },
+  "header": {
+    "about": "About",
+    "main": "Main"
+  }
+}
