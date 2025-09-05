@@ -14,6 +14,7 @@
     "password": "Password",
     "sign-up": "Sign Up",
     "sign-in": "Sign In",
+    "sign-out": "Sign Out",
     "loading": "Signing in...",
     "description": "Sign in to access your dashboard"
   }

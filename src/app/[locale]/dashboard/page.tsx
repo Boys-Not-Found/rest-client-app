@@ -1,20 +1,14 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/i18n/navigation';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { auth } from '@/lib/firebase/client';
 import SignOutButton from '@/components/Auth/SignOutButton';
 import Loader from '@/components/Loader/Loader';
-import { setRequestLocale } from 'next-intl/server';
 import { useTranslations } from 'next-intl';
-import { TypeLocale } from '@/types';
 
-export default function DashboardPage({ params }: { params: { locale: TypeLocale } }) {
-  const { locale } = params;
-
-  setRequestLocale(locale);
-
+export default function DashboardPage() {
   const t = useTranslations('home');
   const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
@@ -22,7 +16,7 @@ export default function DashboardPage({ params }: { params: { locale: TypeLocale
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       if (!firebaseUser) {
-        router.replace('/auth/sign-in');
+        router.replace('/sign-in');
       } else {
         setUser(firebaseUser);
       }
@@ -33,9 +27,7 @@ export default function DashboardPage({ params }: { params: { locale: TypeLocale
   if (!user) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <p className="text-gray-600">
-          <Loader />
-        </p>
+        <Loader />
       </div>
     );
   }

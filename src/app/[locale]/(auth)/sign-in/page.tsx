@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/i18n/navigation';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -9,7 +9,7 @@ import { auth, googleProvider } from '@/lib/firebase/client';
 import toast from 'react-hot-toast';
 import { FcGoogle } from 'react-icons/fc';
 import { FirebaseError } from 'firebase/app';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 const schema = z.object({
   email: z.string().email(),
@@ -21,6 +21,7 @@ export default function SignInPage() {
   const t = useTranslations('auth');
 
   const router = useRouter();
+  const locale = useLocale();
   const {
     register,
     handleSubmit,
@@ -33,7 +34,7 @@ export default function SignInPage() {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       toast.success(t('success'));
-      router.replace('/dashboard');
+      router.replace('/dashboard', { locale: locale });
     } catch (err: unknown) {
       if (err instanceof FirebaseError) {
         toast.error(err.message);
@@ -60,7 +61,7 @@ export default function SignInPage() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-gray-50 p-6">
       <div className="w-full max-w-sm bg-white p-8 rounded-2xl shadow-md">
-        <h1 className="mb-6 text-2xl text-center font-semibold">Sign in</h1>
+        <h1 className="mb-6 text-2xl text-center font-semibold">{t('sign-in')}</h1>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
