@@ -1,0 +1,17 @@
+.header {
+  position: sticky;
+  z-index: 50;
+  top: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 100px;
+  background: white;
+  transition: all 0.3s ease;
+}
+
+.header.scrolled {
+  height: 70px;
+  background: #0000000e;
+}

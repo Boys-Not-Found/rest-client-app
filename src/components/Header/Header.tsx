@@ -5,6 +5,9 @@ import { useLocale, useTranslations } from 'use-intl';
 import Image from 'next/image';
 import { useUserStore } from '@/store/userStore';
 
+import s from './Header.module.scss';
+import { useEffect, useState } from 'react';
+
 const Header = () => {
   const t = useTranslations('auth');
 
@@ -14,14 +17,25 @@ const Header = () => {
 
   const { user } = useUserStore();
 
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 0);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const toggleLocale = () => {
     const nextLocale = locale === 'en' ? 'ru' : 'en';
     router.replace(pathname, { locale: nextLocale });
   };
 
   return (
-    <header className="flex items-center justify-between p-4">
-      <Link href="/sign-in" locale={locale}>
+    <header className={scrolled ? `${s.header} ${s.scrolled}` : s.header}>
+      <Link href="/" locale={locale}>
         <Image
           src="/images/logo.png"
           alt="Logo"
