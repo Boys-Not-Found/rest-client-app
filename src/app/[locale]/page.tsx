@@ -1,15 +1,18 @@
-import { setRequestLocale } from 'next-intl/server';
-import { useTranslations } from 'next-intl';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { TypeLocale } from '@/types';
 import { Link } from '@/i18n/navigation';
 
-export default function MainPage({ params }: { params: { locale: TypeLocale } }) {
-  const { locale } = params;
+type MainPageProps = {
+  params: Promise<{ locale: TypeLocale }>;
+};
+
+export default async function MainPage({ params }: MainPageProps) {
+  const { locale } = await params;
 
   setRequestLocale(locale);
 
-  const tH = useTranslations('home');
-  const tA = useTranslations('auth');
+  const tH = await getTranslations('home');
+  const tA = await getTranslations('auth');
 
   return (
     <>

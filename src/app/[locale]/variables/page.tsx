@@ -1,13 +1,16 @@
-import { setRequestLocale } from 'next-intl/server';
-import { useTranslations } from 'next-intl';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { TypeLocale } from '@/types';
 
-export default function VariablesPage({ params }: { params: { locale: TypeLocale } }) {
-  const { locale } = params;
+type VariablesPageProps = {
+  params: Promise<{ locale: TypeLocale }>;
+};
+
+export default async function VariablesPage({ params }: VariablesPageProps) {
+  const { locale } = await params;
 
   setRequestLocale(locale);
 
-  const t = useTranslations('home');
+  const t = await getTranslations('home');
 
   return (
     <>

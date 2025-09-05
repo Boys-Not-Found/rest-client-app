@@ -1,16 +1,17 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/i18n/navigation';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/lib/firebase/client';
 import { FirebaseError } from 'firebase/app';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 export default function SignUpPage() {
   const t = useTranslations('auth');
 
   const router = useRouter();
+  const locale = useLocale();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -19,7 +20,7 @@ export default function SignUpPage() {
     e.preventDefault();
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      router.replace('/dashboard');
+      router.replace('/dashboard', { locale: locale });
     } catch (err) {
       if (err instanceof FirebaseError) {
         setError(err.message);
@@ -32,7 +33,7 @@ export default function SignUpPage() {
   return (
     <div className="flex min-h-screen items-center justify-center p-6 font-sans">
       <div className="w-full max-w-md space-y-6 bg-white p-8 shadow-lg">
-        <h1 className="text-2xl font-bold text-center">Sign Up</h1>
+        <h1 className="text-2xl font-bold text-center">{t('sign-up')}</h1>
         <form onSubmit={handleSignUp} className="space-y-4">
           <input
             type="email"

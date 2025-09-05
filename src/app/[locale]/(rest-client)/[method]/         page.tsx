@@ -1,17 +1,20 @@
-import { setRequestLocale } from 'next-intl/server';
-import { useTranslations } from 'next-intl';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { TypeLocale } from '@/types';
 
-export default function RestClientPage({ params }: { params: { locale: TypeLocale } }) {
-  const { locale } = params;
+type RestClientPageProps = {
+  params: Promise<{ locale: TypeLocale }>;
+};
+
+export default async function RestClientPage({ params }: RestClientPageProps) {
+  const { locale } = await params;
 
   setRequestLocale(locale);
 
-  const t = useTranslations('home');
+  const t = await getTranslations('home');
 
   return (
     <>
-      <h1>{t('hello')} Rest Client Page</h1>
+      <h1>{t('hello')} RestClientPage Page</h1>
     </>
   );
 }
