@@ -29,6 +29,12 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["./dist/types/**/*.ts", "./next-env.d.ts", "./src", ".next/types/**/*.ts"],
+  "include": [
+    "./dist/types/**/*.ts",
+    "./next-env.d.ts",
+    "./src",
+    ".next/types/**/*.ts",
+    "middleware.ts"
+  ],
   "exclude": ["./node_modules"]
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/i18n/navigation';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -9,6 +9,7 @@ import { auth, googleProvider } from '@/lib/firebase/client';
 import toast from 'react-hot-toast';
 import { FcGoogle } from 'react-icons/fc';
 import { FirebaseError } from 'firebase/app';
+import { useLocale, useTranslations } from 'next-intl';
 
 const schema = z.object({
   email: z.string().email(),
@@ -17,7 +18,10 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 export default function SignInPage() {
+  const t = useTranslations('auth');
+
   const router = useRouter();
+  const locale = useLocale();
   const {
     register,
     handleSubmit,
@@ -29,13 +33,13 @@ export default function SignInPage() {
   const onSubmit = async ({ email, password }: FormData) => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      toast.success('Signed in!');
-      router.replace('/dashboard');
+      toast.success(t('success'));
+      router.replace('/dashboard', { locale: locale });
     } catch (err: unknown) {
       if (err instanceof FirebaseError) {
         toast.error(err.message);
       } else {
-        toast.error('Sign in failed');
+        toast.error(t('fail'));
       }
     }
   };
@@ -43,13 +47,13 @@ export default function SignInPage() {
   const handleGoogleSignIn = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
-      toast.success('Signed in with Google!');
+      toast.success(t('google success'));
       router.replace('/dashboard');
     } catch (err: unknown) {
       if (err instanceof FirebaseError) {
         toast.error(err.message);
       } else {
-        toast.error('Google sign in failed');
+        toast.error(t('google fail'));
       }
     }
   };
@@ -57,13 +61,13 @@ export default function SignInPage() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-gray-50 p-6">
       <div className="w-full max-w-sm bg-white p-8 rounded-2xl shadow-md">
-        <h1 className="mb-6 text-2xl text-center font-semibold">Sign in</h1>
+        <h1 className="mb-6 text-2xl text-center font-semibold">{t('sign-in')}</h1>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
             <input
               type="email"
-              placeholder="Email"
+              placeholder={t('email')}
               className="w-full rounded-xl border border-gray-300 p-3 focus:border-black focus:ring-1 focus:ring-black outline-none"
               {...register('email')}
             />
@@ -73,7 +77,7 @@ export default function SignInPage() {
           <div>
             <input
               type="password"
-              placeholder="Password"
+              placeholder={t('password')}
               className="w-full rounded-xl border border-gray-300 p-3 focus:border-black focus:ring-1 focus:ring-black outline-none"
               {...register('password')}
             />
@@ -86,7 +90,7 @@ export default function SignInPage() {
             disabled={isSubmitting}
             className="w-full rounded-xl bg-black p-3 text-white disabled:opacity-60 hover:bg-gray-800 transition-colors"
           >
-            {isSubmitting ? 'Signing in…' : 'Sign in'}
+            {isSubmitting ? t('loading') : t('sign-in')}
           </button>
         </form>
 
@@ -96,7 +100,7 @@ export default function SignInPage() {
             className="flex w-full items-center justify-center gap-2 rounded-xl border border-gray-300 p-3 hover:bg-gray-100 transition-colors"
           >
             <FcGoogle className="text-xl" />
-            <span>Sign in with Google</span>
+            <span>{t('google')}</span>
           </button>
         </div>
 

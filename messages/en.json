@@ -1,0 +1,21 @@
+{
+  "home": { "hello": "Welcome to REST Client App", "welcome": "Welcome, " },
+  "header": {
+    "about": "About",
+    "main": "Main"
+  },
+  "auth": {
+    "success": "Signed in!",
+    "fail": "Sign in failed",
+    "google": "Sign in with Google",
+    "google success": "Signed in with Google!",
+    "google fail": "Google sign in failed",
+    "email": "Email",
+    "password": "Password",
+    "sign-up": "Sign Up",
+    "sign-in": "Sign In",
+    "sign-out": "Sign Out",
+    "loading": "Signing in...",
+    "description": "Sign in to access your dashboard"
+  }
+}
