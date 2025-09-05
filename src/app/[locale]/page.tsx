@@ -23,11 +23,16 @@ export default async function MainPage({ params }: MainPageProps) {
           <div className="flex justify-center gap-4">
             <Link
               href="/sign-in"
+              locale={locale}
               className="rounded-lg bg-black px-4 py-2 text-white hover:bg-gray-800"
             >
               {tA('sign-in')}
             </Link>
-            <Link href="/sign-up" className="rounded-lg border px-4 py-2 hover:bg-gray-100">
+            <Link
+              href="/sign-up"
+              locale={locale}
+              className="rounded-lg border px-4 py-2 hover:bg-gray-100"
+            >
               {tA('sign-up')}
             </Link>
           </div>
