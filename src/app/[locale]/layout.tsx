@@ -14,5 +14,5 @@ export default async function LocaleLayout({ children, params }: Props) {
     notFound();
   }
   setRequestLocale(locale);
-  return <NextIntlClientProvider>{children}</NextIntlClientProvider>;
+  return <NextIntlClientProvider locale={locale}>{children}</NextIntlClientProvider>;
 }
