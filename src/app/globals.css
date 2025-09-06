@@ -5,3 +5,48 @@ body {
   margin: 0;
   padding: 0;
 }
+
+@layer components {
+  .btn {
+    cursor: pointer;
+    display: inline-flex;
+    flex-direction: row;
+    gap: 0.25rem;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--color-black);
+    border-radius: var(--radius-lg);
+    color: var(--color-black);
+    background-color: var(--color-white);
+    box-shadow: var(--shadow-xl);
+    transition: all 0.5s ease;
+
+    &.inverted {
+      border: 1px solid var(--color-white);
+      color: var(--color-white);
+      background-color: var(--color-black);
+    }
+
+    &:disabled {
+      cursor: default;
+      opacity: 0.5;
+    }
+
+    @media (hover: hover) {
+      cursor: pointer;
+      transition: all 0.5s ease;
+
+      &:hover:not(:disabled) {
+        scale: 1.05;
+        border: 1px solid var(--color-orange-500);
+        color: var(--color-black);
+        background-color: var(--color-orange-500);
+      }
+    }
+
+    @media (width <= 750px) {
+      padding: 0.5rem 1rem;
+    }
+  }
+}
