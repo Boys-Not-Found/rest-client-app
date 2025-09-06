@@ -10,6 +10,7 @@ import toast from 'react-hot-toast';
 import { FcGoogle } from 'react-icons/fc';
 import { FirebaseError } from 'firebase/app';
 import { useLocale, useTranslations } from 'next-intl';
+import { useUserStore } from '@/store/userStore';
 
 const schema = z.object({
   email: z.string().email(),
@@ -22,6 +23,9 @@ export default function SignInPage() {
 
   const router = useRouter();
   const locale = useLocale();
+
+  const setUser = useUserStore((state) => state.setUser);
+
   const {
     register,
     handleSubmit,
@@ -34,7 +38,8 @@ export default function SignInPage() {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       toast.success(t('success'));
-      router.replace('/dashboard', { locale: locale });
+      setUser({ uid: 'fakeID', email: email });
+      router.replace('/', { locale: locale });
     } catch (err: unknown) {
       if (err instanceof FirebaseError) {
         toast.error(err.message);
