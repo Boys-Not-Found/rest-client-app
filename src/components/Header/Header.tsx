@@ -7,6 +7,7 @@ import { useUserStore } from '@/store/userStore';
 
 import s from './Header.module.scss';
 import { useEffect, useState } from 'react';
+import SignOutButton from '@/components/Auth/SignOutButton';
 
 const Header = () => {
   const t = useTranslations('auth');
@@ -15,7 +16,7 @@ const Header = () => {
   const locale = useLocale();
   const pathname = usePathname();
 
-  const { user } = useUserStore();
+  const user = useUserStore((state) => state.user);
 
   const [scrolled, setScrolled] = useState(false);
 
@@ -46,9 +47,7 @@ const Header = () => {
       </Link>
       <div>
         {user ? (
-          <Link href="/" locale={locale} className="rounded-lg border px-4 py-2 hover:bg-gray-100">
-            {t('sign-out')}
-          </Link>
+          <SignOutButton />
         ) : (
           <div className="flex gap-4">
             <Link

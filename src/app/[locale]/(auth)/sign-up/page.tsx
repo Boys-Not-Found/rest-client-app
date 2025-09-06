@@ -6,12 +6,16 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/lib/firebase/client';
 import { FirebaseError } from 'firebase/app';
 import { useLocale, useTranslations } from 'next-intl';
+import { useUserStore } from '@/store/userStore';
 
 export default function SignUpPage() {
   const t = useTranslations('auth');
 
   const router = useRouter();
   const locale = useLocale();
+
+  const setUser = useUserStore((state) => state.setUser);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -20,7 +24,8 @@ export default function SignUpPage() {
     e.preventDefault();
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      router.replace('/dashboard', { locale: locale });
+      setUser({ uid: 'fakeID', email: email });
+      router.replace('/', { locale: locale });
     } catch (err) {
       if (err instanceof FirebaseError) {
         setError(err.message);
