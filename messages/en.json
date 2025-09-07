@@ -1,4 +1,10 @@
 {
+  "error": {
+    "404": "Page not found",
+    "500": "Internal server error",
+    "default": "Something went wrong",
+    "button": "Try again"
+  },
   "home": { "hello": "Welcome to REST Client App", "welcome": "Welcome, " },
   "header": {
     "about": "About",

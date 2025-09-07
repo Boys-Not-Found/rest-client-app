@@ -11,7 +11,7 @@ export default function GlobalError({
     <html>
       <body className="min-h-screen flex flex-col items-center justify-center gap-6 font-sans bg-black text-orange-500">
         <h2>Something went wrong!</h2>
-        <pre>{error.message}</pre>
+        <h2>Error message: {error.message}</h2>
         <button className="btn inverted" onClick={() => reset()}>
           Try again
         </button>
