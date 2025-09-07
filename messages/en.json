@@ -5,6 +5,11 @@
     "default": "Something went wrong",
     "button": "Try again"
   },
+  "NotFoundPage": {
+    "title": "Page not found",
+    "description": "Could not find requested resource",
+    "button": "Return Home"
+  },
   "home": { "hello": "Welcome to REST Client App", "welcome": "Welcome, " },
   "header": {
     "about": "About",
