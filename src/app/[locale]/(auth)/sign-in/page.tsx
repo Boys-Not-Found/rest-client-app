@@ -1,26 +1,31 @@
 'use client';
 
 import { useRouter } from '@/i18n/navigation';
-import { z } from 'zod';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { Link } from '@/i18n/navigation';
 import { auth, googleProvider } from '@/lib/firebase/client';
+import { useUserStore } from '@/store/userStore';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { FirebaseError } from 'firebase/app';
+import {
+  reload,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from 'firebase/auth';
+import { useLocale, useTranslations } from 'next-intl';
+import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { FcGoogle } from 'react-icons/fc';
-import { FirebaseError } from 'firebase/app';
-import { useLocale, useTranslations } from 'next-intl';
-import { useUserStore } from '@/store/userStore';
+import { z } from 'zod';
 
 const schema = z.object({
-  email: z.string().email(),
-  password: z.string().min(6),
+  email: z.string().email('Enter a valid email'),
+  password: z.string().min(6, 'Password must be at least 6 characters'),
 });
 type FormData = z.infer<typeof schema>;
 
 export default function SignInPage() {
   const t = useTranslations('auth');
-
   const router = useRouter();
   const locale = useLocale();
 
@@ -29,6 +34,7 @@ export default function SignInPage() {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -36,13 +42,38 @@ export default function SignInPage() {
 
   const onSubmit = async ({ email, password }: FormData) => {
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      toast.success(t('success'));
-      setUser({ uid: 'fakeID', email: email });
-      router.replace('/', { locale: locale });
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      await reload(user);
+
+      if (user.emailVerified) {
+        toast.success(t('success'));
+        setUser({ uid: user.uid, email: user.email });
+        router.replace('/', { locale });
+      } else {
+        toast.error(t('verify'));
+        await auth.signOut();
+      }
     } catch (err: unknown) {
       if (err instanceof FirebaseError) {
-        toast.error(err.message);
+        switch (err.code) {
+          case 'auth/invalid-email':
+            toast.error(t('invalid-email'));
+            break;
+          case 'auth/user-not-found':
+            toast.error(t('user-not-found'));
+            break;
+          case 'auth/wrong-password':
+          case 'auth/invalid-credential':
+            toast.error(t('wrong-password'));
+            break;
+          case 'auth/too-many-requests':
+            toast.error(t('too-many-requests'));
+            break;
+          default:
+            toast.error(t('fail'));
+        }
       } else {
         toast.error(t('fail'));
       }
@@ -59,6 +90,24 @@ export default function SignInPage() {
         toast.error(err.message);
       } else {
         toast.error(t('google fail'));
+      }
+    }
+  };
+
+  const handleForgotPassword = async () => {
+    const email = watch('email');
+    if (!email) {
+      toast.error(t('enter-email-first'));
+      return;
+    }
+    try {
+      await sendPasswordResetEmail(auth, email);
+      toast.success(t('reset-email-sent'));
+    } catch (err: unknown) {
+      if (err instanceof FirebaseError) {
+        toast.error(err.message);
+      } else {
+        toast.error(t('fail'));
       }
     }
   };
@@ -91,9 +140,16 @@ export default function SignInPage() {
             )}
           </div>
 
+          <p
+            onClick={handleForgotPassword}
+            className="cursor-pointer text-sm text-blue-600 hover:underline"
+          >
+            {t('forgot-password')}
+          </p>
+
           <button
             disabled={isSubmitting}
-            className="w-full rounded-xl bg-black p-3 text-white disabled:opacity-60 hover:bg-gray-800 transition-colors"
+            className="w-full rounded-xl bg-black p-3 text-white disabled:opacity-60 hover:bg-gray-800 transition-colors cursor-pointer"
           >
             {isSubmitting ? t('loading') : t('sign-in')}
           </button>
@@ -102,7 +158,7 @@ export default function SignInPage() {
         <div className="mt-6">
           <button
             onClick={handleGoogleSignIn}
-            className="flex w-full items-center justify-center gap-2 rounded-xl border border-gray-300 p-3 hover:bg-gray-100 transition-colors"
+            className="flex w-full items-center justify-center gap-2 rounded-xl border border-gray-300 p-3 hover:bg-gray-100 transition-colors cursor-pointer"
           >
             <FcGoogle className="text-xl" />
             <span>{t('google')}</span>
@@ -110,10 +166,10 @@ export default function SignInPage() {
         </div>
 
         <p className="mt-4 text-center text-sm text-gray-600">
-          No account?{' '}
-          <a className="underline text-black" href="/auth/sign-up">
-            Create one
-          </a>
+          {t('no-account')}{' '}
+          <Link href="/sign-up" locale={locale} className="underline text-black">
+            {t('create-one')}
+          </Link>
         </p>
       </div>
     </main>

@@ -1,68 +1,136 @@
 'use client';
 
-import { useState } from 'react';
 import { useRouter } from '@/i18n/navigation';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/lib/firebase/client';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { FirebaseError } from 'firebase/app';
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  updateProfile,
+} from 'firebase/auth';
 import { useLocale, useTranslations } from 'next-intl';
-import { useUserStore } from '@/store/userStore';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import { z } from 'zod';
+
+const schema = z
+  .object({
+    name: z.string().min(2, 'Name must be at least 2 characters'),
+    email: z.string().email('Enter a valid email'),
+    password: z
+      .string()
+      .min(6, 'Password must be at least 6 characters')
+      .regex(/[0-9]/, 'Password must include a number')
+      .regex(/[A-Za-z]/, 'Password must include a letter'),
+    confirmPassword: z.string().min(6, 'Please confirm your password'),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ['confirmPassword'],
+  });
+
+type FormData = z.infer<typeof schema>;
 
 export default function SignUpPage() {
   const t = useTranslations('auth');
-
   const router = useRouter();
   const locale = useLocale();
+  const [loading, setLoading] = useState(false);
 
-  const setUser = useUserStore((state) => state.setUser);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: zodResolver(schema),
+  });
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-
-  const handleSignUp = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = async ({ name, email, password }: FormData) => {
+    setLoading(true);
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      setUser({ uid: 'fakeID', email: email });
-      router.replace('/', { locale: locale });
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
+      if (auth.currentUser) {
+        await updateProfile(auth.currentUser, { displayName: name });
+      }
+      await sendEmailVerification(userCredential.user, {
+        url: `${window.location.origin}/${locale}/verified`,
+      });
+      toast.success(t('verify-email'));
+
+      router.replace({ pathname: '/sign-in' }, { locale });
     } catch (err) {
       if (err instanceof FirebaseError) {
-        setError(err.message);
+        toast.error(err.message);
       } else {
-        setError('An unexpected error occurred');
+        toast.error(t('fail'));
       }
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center p-6 font-sans">
-      <div className="w-full max-w-md space-y-6 bg-white p-8 shadow-lg">
-        <h1 className="text-2xl font-bold text-center">{t('sign-up')}</h1>
-        <form onSubmit={handleSignUp} className="space-y-4">
-          <input
-            type="email"
-            placeholder={t('email')}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full rounded-lg border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-black"
-          />
-          <input
-            type="password"
-            placeholder={t('password')}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full rounded-lg border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-black"
-          />
+    <main className="flex min-h-screen flex-col items-center justify-center bg-gray-50 p-6">
+      <div className="w-full max-w-sm bg-white p-8 rounded-2xl shadow-md">
+        <h1 className="mb-6 text-2xl text-center font-semibold">{t('sign-up')}</h1>
+
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <div>
+            <input
+              type="text"
+              placeholder={t('name')}
+              className="w-full rounded-xl border border-gray-300 p-3 focus:border-black focus:ring-1 focus:ring-black outline-none"
+              {...register('name')}
+            />
+            {errors.name && <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>}
+          </div>
+
+          <div>
+            <input
+              type="email"
+              placeholder={t('email')}
+              className="w-full rounded-xl border border-gray-300 p-3 focus:border-black focus:ring-1 focus:ring-black outline-none"
+              {...register('email')}
+            />
+            {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>}
+          </div>
+
+          <div>
+            <input
+              type="password"
+              placeholder={t('password')}
+              className="w-full rounded-xl border border-gray-300 p-3 focus:border-black focus:ring-1 focus:ring-black outline-none"
+              {...register('password')}
+            />
+            {errors.password && (
+              <p className="mt-1 text-sm text-red-600">{errors.password.message}</p>
+            )}
+          </div>
+
+          <div>
+            <input
+              type="password"
+              placeholder={t('confirm-password')}
+              className="w-full rounded-xl border border-gray-300 p-3 focus:border-black focus:ring-1 focus:ring-black outline-none"
+              {...register('confirmPassword')}
+            />
+            {errors.confirmPassword && (
+              <p className="mt-1 text-sm text-red-600">{errors.confirmPassword.message}</p>
+            )}
+          </div>
+
           <button
             type="submit"
-            className="w-full rounded-lg bg-black px-4 py-2 text-white hover:bg-gray-800"
+            disabled={loading}
+            className="w-full rounded-xl bg-black p-3 text-white hover:bg-gray-800 transition-colors disabled:opacity-60 cursor-pointer"
           >
-            {t('sign-up')}
+            {loading ? t('loading') : t('sign-up')}
           </button>
         </form>
-        {error && <p className="text-center text-sm text-red-600">{error}</p>}
       </div>
-    </div>
+    </main>
   );
 }
