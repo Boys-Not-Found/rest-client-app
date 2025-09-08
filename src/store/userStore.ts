@@ -10,7 +10,6 @@ export const useUserStore = create<UserState>()(
   persist(
     (set) => ({
       user: null,
-      email: null,
       setUser: (user) => set({ user }),
     }),
     {

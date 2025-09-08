@@ -21,10 +21,11 @@ const schema = z
     email: z.string().email('Enter a valid email'),
     password: z
       .string()
-      .min(6, 'Password must be at least 6 characters')
-      .regex(/[0-9]/, 'Password must include a number')
-      .regex(/[A-Za-z]/, 'Password must include a letter'),
-    confirmPassword: z.string().min(6, 'Please confirm your password'),
+      .min(8, 'Password must be at least 8 characters')
+      .regex(/\p{L}/u, 'Password must include a letter')
+      .regex(/\p{N}/u, 'Password must include a number')
+      .regex(/[^\p{L}\p{N}\s]/u, 'Password must include a special character'),
+    confirmPassword: z.string().min(8, 'Please confirm your password'),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match",
