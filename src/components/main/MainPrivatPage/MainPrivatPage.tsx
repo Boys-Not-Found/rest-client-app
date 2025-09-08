@@ -1,6 +1,4 @@
 import { useTranslations } from 'next-intl';
-
-import SignOutButton from '@/components/Auth/SignOutButton';
 import { useUserStore } from '@/store/userStore';
 
 export default function MainPrivatPage() {
@@ -15,10 +13,6 @@ export default function MainPrivatPage() {
           {t('welcome')}
           <span className="text-black">{user?.email || 'user'}</span>
         </h1>
-
-        <div className="flex justify-center">
-          <SignOutButton />
-        </div>
       </div>
     </>
   );
