@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono } from 'next/font/google';
 import { Toaster } from 'react-hot-toast';
+import { Providers } from './providers';
 
 import './globals.css';
 
@@ -20,8 +21,10 @@ export default async function RootLayout({ children }: Props) {
   return (
     <html>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {children}
-        <Toaster position="top-center" reverseOrder={false} />
+        <Providers>
+          {children}
+          <Toaster position="top-center" reverseOrder={false} />
+        </Providers>
       </body>
     </html>
   );

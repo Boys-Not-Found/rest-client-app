@@ -7,7 +7,8 @@ import { useUserStore } from '@/store/userStore';
 
 import s from './Header.module.scss';
 import { useEffect, useState } from 'react';
-import SignOutButton from '@/components/Auth/SignOutButton';
+import { Button } from '@heroui/react';
+// import SignOutButton from '@/components/Auth/SignOutButton';
 
 const Header = () => {
   const t = useTranslations('auth');
@@ -46,7 +47,7 @@ const Header = () => {
         />
       </Link>
       <div>
-        {user ? (
+        {/* {user ? (
           <SignOutButton />
         ) : (
           <div className="flex gap-4">
@@ -65,7 +66,7 @@ const Header = () => {
               {t('sign-up')}
             </Link>
           </div>
-        )}
+        )} */}
       </div>
       <button onClick={toggleLocale} className="rounded-lg border px-4 py-2 hover:bg-gray-100">
         {locale === 'en' ? 'RU' : 'EN'}
