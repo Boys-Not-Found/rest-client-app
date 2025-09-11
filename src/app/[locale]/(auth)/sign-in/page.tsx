@@ -1,7 +1,6 @@
 'use client';
 
-import { useRouter } from '@/i18n/navigation';
-import { Link } from '@/i18n/navigation';
+import { useRouter, Link } from '@/i18n/navigation';
 import { auth, googleProvider } from '@/lib/firebase/client';
 import { useUserStore } from '@/store/userStore';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -28,7 +27,6 @@ export default function SignInPage() {
   const t = useTranslations('auth');
   const router = useRouter();
   const locale = useLocale();
-
   const setUser = useUserStore((state) => state.setUser);
 
   const {
@@ -46,10 +44,15 @@ export default function SignInPage() {
       const user = userCredential.user;
 
       await reload(user);
+      const freshUser = auth.currentUser;
 
-      if (user.emailVerified) {
+      if (freshUser?.emailVerified) {
+        setUser({
+          uid: freshUser.uid,
+          email: freshUser.email,
+          displayName: freshUser.displayName || freshUser.email?.split('@')[0] || 'User',
+        });
         toast.success(t('success'));
-        setUser({ uid: user.uid, email: user.email });
         router.replace('/', { locale });
       } else {
         toast.error(t('verify'));
@@ -62,11 +65,9 @@ export default function SignInPage() {
             toast.error(t('invalid-email'));
             break;
           case 'auth/user-not-found':
-            toast.error(t('user-not-found'));
-            break;
           case 'auth/wrong-password':
           case 'auth/invalid-credential':
-            toast.error(t('wrong-password'));
+            toast.error(t('invalid-credentials'));
             break;
           case 'auth/too-many-requests':
             toast.error(t('too-many-requests'));
@@ -82,9 +83,18 @@ export default function SignInPage() {
 
   const handleGoogleSignIn = async () => {
     try {
-      await signInWithPopup(auth, googleProvider);
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+      await reload(user);
+
+      setUser({
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName || user.email?.split('@')[0] || 'User',
+      });
+
       toast.success(t('google success'));
-      router.replace('/dashboard');
+      router.replace('/', { locale });
     } catch (err: unknown) {
       if (err instanceof FirebaseError) {
         toast.error(err.message);

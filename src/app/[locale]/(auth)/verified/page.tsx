@@ -18,7 +18,11 @@ export default function VerifiedPage() {
       if (user) {
         await reload(user);
         if (user.emailVerified) {
-          setUser({ uid: user.uid, email: user.email });
+          setUser({
+            uid: user.uid,
+            email: user.email,
+            displayName: user.displayName || user.email?.split('@')[0] || 'User',
+          });
           setStatus('success');
           setTimeout(() => router.replace('/', { locale }), 2000);
         } else {
