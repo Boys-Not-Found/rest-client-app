@@ -20,6 +20,7 @@
     "success": "Signed in!",
     "fail": "Something went wrong",
     "invalid-email": "Invalid email address",
+    "invalid-credentials": "Invalid email or password",
     "user-not-found": "No account found with this email",
     "wrong-password": "Incorrect password",
     "too-many-requests": "Too many attempts, please try again later",

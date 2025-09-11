@@ -2,6 +2,7 @@
 
 import { useRouter } from '@/i18n/navigation';
 import { auth } from '@/lib/firebase/client';
+import { useUserStore } from '@/store/userStore';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FirebaseError } from 'firebase/app';
 import {
@@ -39,6 +40,7 @@ export default function SignUpPage() {
   const router = useRouter();
   const locale = useLocale();
   const [loading, setLoading] = useState(false);
+  const setUser = useUserStore((state) => state.setUser);
 
   const {
     register,
@@ -56,11 +58,18 @@ export default function SignUpPage() {
       if (auth.currentUser) {
         await updateProfile(auth.currentUser, { displayName: name });
       }
+
+      setUser({
+        uid: userCredential.user.uid,
+        email: userCredential.user.email,
+        displayName: name,
+      });
+
       await sendEmailVerification(userCredential.user, {
         url: `${window.location.origin}/${locale}/verified`,
       });
-      toast.success(t('verify-email'));
 
+      toast.success(t('verify-email'));
       router.replace({ pathname: '/sign-in' }, { locale });
     } catch (err) {
       if (err instanceof FirebaseError) {
