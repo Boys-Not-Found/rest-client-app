@@ -17,13 +17,7 @@ export function Footer() {
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 py-6 md:flex-row">
         <div className="flex flex-wrap justify-center gap-4">
           {authors.map((author) => (
-            <Link
-              key={author.url}
-              isExternal
-              showAnchorIcon
-              href={author.url}
-              className="text-primary text-sm"
-            >
+            <Link key={author.url} isExternal href={author.url} className="text-primary text-sm">
               {author.name}
             </Link>
           ))}
