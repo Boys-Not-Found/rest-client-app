@@ -15,6 +15,7 @@
     "about": "About",
     "main": "Main"
   },
+  "navbar": { "history": "History", "variables": "Variables", "rest-client": "Rest-client" },
   "auth": {
     "name": "Full Name",
     "success": "Signed in!",
