@@ -16,6 +16,7 @@ export default function SignOutButton() {
   const handleSignOut = async () => {
     await signOut(auth);
     setUser(null);
+    document.cookie = 'isAuth=; path=/; max-age=0';
     router.replace('/', { locale: locale });
   };
 

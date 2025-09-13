@@ -50,6 +50,7 @@ export default function SignInPage() {
       if (user.emailVerified) {
         toast.success(t('success'));
         setUser({ uid: user.uid, email: user.email });
+        document.cookie = 'isAuth=true; path=/; max-age=3600; SameSite=Lax';
         router.replace('/', { locale });
       } else {
         toast.error(t('verify'));
