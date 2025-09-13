@@ -1,20 +1,15 @@
-import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { TypeLocale } from '@/types';
+'use client';
+import dynamic from 'next/dynamic';
+import { useUserStore } from '@/store/userStore';
+import Loader from '@/components/Loader/Loader';
 
-type VariablesPageProps = {
-  params: Promise<{ locale: TypeLocale }>;
-};
+const VariablesContent = dynamic(() => import('./VariablesContent'), {
+  ssr: false,
+  loading: () => <Loader />,
+});
 
-export default async function VariablesPage({ params }: VariablesPageProps) {
-  const { locale } = await params;
+export default function VariablesPage() {
+  const user = useUserStore((state) => state.user);
 
-  setRequestLocale(locale);
-
-  const t = await getTranslations('home');
-
-  return (
-    <>
-      <h1>{t('hello')} Variables Page</h1>
-    </>
-  );
+  return user && <VariablesContent />;
 }

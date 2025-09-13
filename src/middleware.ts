@@ -6,7 +6,7 @@ export default function middleware(request: NextRequest) {
   const isAuth = cookieHeader.includes('isAuth=true');
 
   const { pathname } = request.nextUrl;
-  const privateRoutes = ['/history', '/variables'];
+  const privateRoutes = ['/history', '/variables', '/rest-client'];
   const isPrivate = privateRoutes.some((route) => pathname.includes(route));
 
   if (isPrivate && !isAuth) {
@@ -25,5 +25,7 @@ export const config = {
     '/(en|ru)/history/:path*',
     '/(en|ru)/variables',
     '/(en|ru)/variables/:path*',
+    '/(en|ru)/rest-client',
+    '/(en|ru)/rest-client/:path*',
   ],
 };
