@@ -10,7 +10,6 @@ export default async function HistoryPage({ params }: HistoryPageProps) {
   setRequestLocale(locale);
 
   const t = await getTranslations('home');
-  console.log('History component loaded');
 
   return (
     <>

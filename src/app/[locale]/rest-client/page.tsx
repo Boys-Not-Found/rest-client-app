@@ -1,13 +1,15 @@
 'use client';
-import { useTranslations } from 'next-intl';
+import dynamic from 'next/dynamic';
+import { useUserStore } from '@/store/userStore';
+import Loader from '@/components/Loader/Loader';
+
+const RestClientContent = dynamic(() => import('./RestClientContent'), {
+  ssr: false,
+  loading: () => <Loader />,
+});
 
 export default function RestClientPage() {
-  const t = useTranslations('home');
-  console.log('Rest-client component loaded');
+  const user = useUserStore((state) => state.user);
 
-  return (
-    <>
-      <h1>{t('hello')} Rest-client Page</h1>
-    </>
-  );
+  return user && <RestClientContent />;
 }
