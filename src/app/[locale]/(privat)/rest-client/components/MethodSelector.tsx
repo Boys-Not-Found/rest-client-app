@@ -1,0 +1,24 @@
+'use client';
+import React from 'react';
+import { useRestStore } from '@/store/useRestStore';
+
+const METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'];
+
+export default function MethodSelector() {
+  const method = useRestStore((s) => s.method);
+  const setMethod = useRestStore((s) => s.setMethod);
+
+  return (
+    <select
+      value={method}
+      onChange={(e) => setMethod(e.target.value)}
+      className="border rounded px-2 py-1 bg-white"
+    >
+      {METHODS.map((m) => (
+        <option key={m} value={m}>
+          {m}
+        </option>
+      ))}
+    </select>
+  );
+}

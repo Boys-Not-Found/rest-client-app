@@ -1,7 +1,7 @@
 'use client';
 
 import { Link } from '@/i18n/navigation';
-import { useLocale, useTranslations } from 'use-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 const NavBar = () => {
   const t = useTranslations('navbar');
