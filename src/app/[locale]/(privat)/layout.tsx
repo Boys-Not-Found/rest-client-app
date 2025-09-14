@@ -7,7 +7,7 @@ type LocaleLayoutProps = {
 export default function PrivatLayout({ children }: LocaleLayoutProps) {
   return (
     <main className="container">
-      <section className="section h-min-screen flex flex-col gap-4">
+      <section className="section min-h-screen flex flex-col gap-4">
         <NavBar />
         {children}
       </section>

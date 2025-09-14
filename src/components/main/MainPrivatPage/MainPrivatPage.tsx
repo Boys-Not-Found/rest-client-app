@@ -8,12 +8,12 @@ export default function MainPrivatPage() {
   const user = useUserStore((state) => state.user);
   return (
     <>
-      <section className="section h-screen">
+      <section className="section h-screen flex flex-col gap-5">
+        <NavBar />
         <h1 className="text-2xl font-bold text-center">
           {t('welcome')}
           <span>{user?.displayName || 'user'}</span>
         </h1>
-        <NavBar />
       </section>
     </>
   );

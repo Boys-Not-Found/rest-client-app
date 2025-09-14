@@ -23,7 +23,7 @@ export const useVariablesStore = create<VariablesState>()(
       clearVariables: () => set({ variables: [] }),
     }),
     {
-      name: 'variables-storage',
+      name: 'variables',
     }
   )
 );
