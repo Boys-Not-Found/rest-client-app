@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import { useUserStore } from '@/store/userStore';
 import Loader from '@/components/Loader/Loader';
 
-const VariablesContent = dynamic(() => import('./VariablesContent'), {
+const VariablesContent = dynamic(() => import('./components/VariablesContent'), {
   ssr: false,
   loading: () => <Loader />,
 });

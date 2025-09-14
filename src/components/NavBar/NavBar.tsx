@@ -10,13 +10,13 @@ const NavBar = () => {
 
   return (
     <nav className="flex gap-4 justify-center">
-      <Link className="btn" href="/history" locale={locale}>
+      <Link className="btn inverted" href="/history" locale={locale}>
         {t('history')}
       </Link>
-      <Link className="btn" href="/variables" locale={locale}>
+      <Link className="btn inverted" href="/variables" locale={locale}>
         {t('variables')}
       </Link>
-      <Link className="btn" href="/rest-client" locale={locale}>
+      <Link className="btn inverted" href="/rest-client" locale={locale}>
         {t('rest-client')}
       </Link>
     </nav>

@@ -2,7 +2,7 @@
 
 import { Link, usePathname, useRouter } from '@/i18n/navigation';
 import { useLocale, useTranslations } from 'use-intl';
-import Image from 'next/image';
+import { SiPostman } from 'react-icons/si';
 import { useUserStore } from '@/store/userStore';
 
 import s from './Header.module.scss';
@@ -36,40 +36,28 @@ const Header = () => {
 
   return (
     <header className={scrolled ? `${s.header} ${s.scrolled}` : s.header}>
-      <Link href="/" locale={locale}>
-        <Image
-          src="/images/logo.png"
-          alt="Logo"
-          width={50}
-          height={50}
-          className="cursor-pointer"
-        />
-      </Link>
-      <div>
-        {user ? (
-          <SignOutButton />
-        ) : (
-          <div className="flex gap-4">
-            <Link
-              href="/sign-in"
-              locale={locale}
-              className="rounded-lg border px-4 py-2 hover:bg-gray-100"
-            >
-              {t('sign-in')}
-            </Link>
-            <Link
-              href="/sign-up"
-              locale={locale}
-              className="rounded-lg border px-4 py-2 hover:bg-gray-100"
-            >
-              {t('sign-up')}
-            </Link>
-          </div>
-        )}
-      </div>
-      <button onClick={toggleLocale} className="rounded-lg border px-4 py-2 hover:bg-gray-100">
-        {locale === 'en' ? 'RU' : 'EN'}
-      </button>
+      <section className={s.container}>
+        <Link href="/" locale={locale} className="btn-icon text-5xl">
+          <SiPostman />
+        </Link>
+        <div>
+          {user ? (
+            <SignOutButton />
+          ) : (
+            <div className="flex gap-4">
+              <Link href="/sign-in" locale={locale} className="btn inverted">
+                {t('sign-in')}
+              </Link>
+              <Link href="/sign-up" locale={locale} className="btn inverted">
+                {t('sign-up')}
+              </Link>
+            </div>
+          )}
+        </div>
+        <button onClick={toggleLocale} className="btn-icon">
+          {locale === 'en' ? 'RU' : 'EN'}
+        </button>
+      </section>
     </header>
   );
 };

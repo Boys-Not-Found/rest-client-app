@@ -124,65 +124,51 @@ export default function SignInPage() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gray-50 p-6">
-      <div className="w-full max-w-sm bg-white p-8 rounded-2xl shadow-md">
-        <h1 className="mb-6 text-2xl text-center font-semibold">{t('sign-in')}</h1>
-
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <div>
-            <input
-              type="email"
-              placeholder={t('email')}
-              className="w-full rounded-xl border border-gray-300 p-3 focus:border-black focus:ring-1 focus:ring-black outline-none"
-              {...register('email')}
-            />
-            {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>}
-          </div>
-
-          <div>
-            <input
-              type="password"
-              placeholder={t('password')}
-              className="w-full rounded-xl border border-gray-300 p-3 focus:border-black focus:ring-1 focus:ring-black outline-none"
-              {...register('password')}
-            />
-            {errors.password && (
-              <p className="mt-1 text-sm text-red-600">{errors.password.message}</p>
-            )}
-          </div>
-
-          <p
-            onClick={handleForgotPassword}
-            className="cursor-pointer text-sm text-blue-600 hover:underline"
-          >
-            {t('forgot-password')}
-          </p>
-
-          <button
-            disabled={isSubmitting}
-            className="w-full rounded-xl bg-black p-3 text-white disabled:opacity-60 hover:bg-gray-800 transition-colors cursor-pointer"
-          >
-            {isSubmitting ? t('loading') : t('sign-in')}
-          </button>
-        </form>
-
-        <div className="mt-6">
-          <button
-            onClick={handleGoogleSignIn}
-            className="flex w-full items-center justify-center gap-2 rounded-xl border border-gray-300 p-3 hover:bg-gray-100 transition-colors cursor-pointer"
-          >
-            <FcGoogle className="text-xl" />
-            <span>{t('google')}</span>
-          </button>
+    <>
+      <h1 className="mb-6 text-2xl text-center font-semibold">{t('sign-in')}</h1>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <div>
+          <input type="email" placeholder={t('email')} className="input" {...register('email')} />
+          {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>}
         </div>
 
-        <p className="mt-4 text-center text-sm text-gray-600">
-          {t('no-account')}{' '}
-          <Link href="/sign-up" locale={locale} className="underline text-black">
-            {t('create-one')}
-          </Link>
+        <div>
+          <input
+            type="password"
+            placeholder={t('password')}
+            className="input"
+            {...register('password')}
+          />
+          {errors.password && (
+            <p className="mt-1 text-sm text-red-600">{errors.password.message}</p>
+          )}
+        </div>
+
+        <p
+          onClick={handleForgotPassword}
+          className="cursor-pointer text-sm text-blue-600 hover:underline"
+        >
+          {t('forgot-password')}
         </p>
+
+        <button disabled={isSubmitting} className="btn inverted">
+          {isSubmitting ? t('loading') : t('sign-in')}
+        </button>
+      </form>
+
+      <div className="mt-6">
+        <button onClick={handleGoogleSignIn} className="btn inverted">
+          <FcGoogle className="text-xl" />
+          <span>{t('google')}</span>
+        </button>
       </div>
-    </main>
+
+      <p className="mt-4 text-center text-sm text-gray-600">
+        {t('no-account')}{' '}
+        <Link href="/sign-up" locale={locale} className="underline text-black">
+          {t('create-one')}
+        </Link>
+      </p>
+    </>
   );
 }

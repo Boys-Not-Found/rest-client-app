@@ -10,13 +10,13 @@ export default function MainPrivatPage() {
 
   return (
     <>
-      <div className="w-full max-w-md rounded-xl bg-white p-8 shadow-lg space-y-6">
+      <section className="section h-screen flex flex-col gap-5">
+        <NavBar />
         <h1 className="text-2xl font-bold text-center">
           {t('welcome')}
-          <span className="text-black">{user?.displayName || 'user'}</span>
+          <span>{user?.displayName || 'user'}</span>
         </h1>
-        <NavBar />
-      </div>
+      </section>
     </>
   );
 }

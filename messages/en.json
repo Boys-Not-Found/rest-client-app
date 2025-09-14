@@ -42,5 +42,17 @@
     "no-account": "No account?",
     "create-one": "Create one",
     "forgot-password": "Forgot password?"
+  },
+  "vars": {
+    "title": "Variables",
+    "add": "Add variable",
+    "delete": "Delete variable",
+    "clear": "Clear all variables",
+    "edit": "Edit variable",
+    "key": "Key",
+    "value": "Value",
+    "save": "Save",
+    "cancel": "Cancel",
+    "no-variables": "No variables yet"
   }
 }

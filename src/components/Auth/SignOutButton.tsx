@@ -21,10 +21,7 @@ export default function SignOutButton() {
   };
 
   return (
-    <button
-      onClick={handleSignOut}
-      className="rounded-lg bg-black px-4 py-2 text-white hover:bg-gray-800"
-    >
+    <button onClick={handleSignOut} className="btn inverted">
       {t('sign-out')}
     </button>
   );
