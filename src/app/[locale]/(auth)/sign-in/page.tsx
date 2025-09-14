@@ -53,6 +53,7 @@ export default function SignInPage() {
           displayName: freshUser.displayName || freshUser.email?.split('@')[0] || 'User',
         });
         toast.success(t('success'));
+        document.cookie = 'isAuth=true; path=/; max-age=3600; SameSite=Lax';
         router.replace('/', { locale });
       } else {
         toast.error(t('verify'));

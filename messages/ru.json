@@ -18,6 +18,7 @@
     "about": "О нас",
     "main": "Главная"
   },
+  "navbar": { "history": "История", "variables": "Переменные", "rest-client": "Rest-клиент" },
   "auth": {
     "name": "Полное имя",
     "success": "Вы успешно вошли в систему!",

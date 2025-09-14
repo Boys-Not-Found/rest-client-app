@@ -1,5 +1,6 @@
 import { useTranslations } from 'next-intl';
 import { useUserStore } from '@/store/userStore';
+import NavBar from '@/components/NavBar/NavBar';
 
 export default function MainPrivatPage() {
   const t = useTranslations('home');
@@ -12,6 +13,7 @@ export default function MainPrivatPage() {
           {t('welcome')}
           <span className="text-black">{user?.displayName || 'user'}</span>
         </h1>
+        <NavBar />
       </div>
     </>
   );
