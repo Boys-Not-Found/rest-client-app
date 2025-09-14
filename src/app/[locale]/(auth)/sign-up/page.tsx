@@ -83,64 +83,48 @@ export default function SignUpPage() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gray-50 p-6">
-      <div className="w-full max-w-sm bg-white p-8 rounded-2xl shadow-md">
-        <h1 className="mb-6 text-2xl text-center font-semibold">{t('sign-up')}</h1>
+    <>
+      <h1 className="mb-6 text-2xl text-center font-semibold">{t('sign-up')}</h1>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <div>
-            <input
-              type="text"
-              placeholder={t('name')}
-              className="w-full rounded-xl border border-gray-300 p-3 focus:border-black focus:ring-1 focus:ring-black outline-none"
-              {...register('name')}
-            />
-            {errors.name && <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>}
-          </div>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <div>
+          <input type="text" placeholder={t('name')} className="input" {...register('name')} />
+          {errors.name && <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>}
+        </div>
 
-          <div>
-            <input
-              type="email"
-              placeholder={t('email')}
-              className="w-full rounded-xl border border-gray-300 p-3 focus:border-black focus:ring-1 focus:ring-black outline-none"
-              {...register('email')}
-            />
-            {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>}
-          </div>
+        <div>
+          <input type="email" placeholder={t('email')} className="input" {...register('email')} />
+          {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>}
+        </div>
 
-          <div>
-            <input
-              type="password"
-              placeholder={t('password')}
-              className="w-full rounded-xl border border-gray-300 p-3 focus:border-black focus:ring-1 focus:ring-black outline-none"
-              {...register('password')}
-            />
-            {errors.password && (
-              <p className="mt-1 text-sm text-red-600">{errors.password.message}</p>
-            )}
-          </div>
+        <div>
+          <input
+            type="password"
+            placeholder={t('password')}
+            className="input"
+            {...register('password')}
+          />
+          {errors.password && (
+            <p className="mt-1 text-sm text-red-600">{errors.password.message}</p>
+          )}
+        </div>
 
-          <div>
-            <input
-              type="password"
-              placeholder={t('confirm-password')}
-              className="w-full rounded-xl border border-gray-300 p-3 focus:border-black focus:ring-1 focus:ring-black outline-none"
-              {...register('confirmPassword')}
-            />
-            {errors.confirmPassword && (
-              <p className="mt-1 text-sm text-red-600">{errors.confirmPassword.message}</p>
-            )}
-          </div>
+        <div>
+          <input
+            type="password"
+            placeholder={t('confirm-password')}
+            className="input"
+            {...register('confirmPassword')}
+          />
+          {errors.confirmPassword && (
+            <p className="mt-1 text-sm text-red-600">{errors.confirmPassword.message}</p>
+          )}
+        </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full rounded-xl bg-black p-3 text-white hover:bg-gray-800 transition-colors disabled:opacity-60 cursor-pointer"
-          >
-            {loading ? t('loading') : t('sign-up')}
-          </button>
-        </form>
-      </div>
-    </main>
+        <button type="submit" disabled={loading} className="btn inverted">
+          {loading ? t('loading') : t('sign-up')}
+        </button>
+      </form>
+    </>
   );
 }

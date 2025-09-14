@@ -17,7 +17,7 @@ export default function Error({
   }, [error]);
 
   return (
-    <div className="rounded-xl border w-fit m-4 p-4 flex flex-col items-center gap-4">
+    <div className="section h-screen flex flex-col justify-center items-center gap-5">
       <h2>{t('default')}</h2>
       <button className="btn inverted" onClick={() => reset()}>
         {t('button')}

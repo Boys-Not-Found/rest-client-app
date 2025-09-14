@@ -2,17 +2,24 @@
   position: sticky;
   z-index: 50;
   top: 0;
+  height: 100px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  color: white;
+  background: black;
+  transition: all 0.3s ease;
+}
+
+.container {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  height: 100px;
-  padding: 0 40px;
-  background: white;
-  transition: all 0.3s ease;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
 .header.scrolled {
-  height: 70px;
-  background: #0000000e;
+  height: 80px;
+  background: #1b1919;
 }

@@ -1,12 +1,32 @@
 @import 'tailwindcss';
 
+html {
+  font-size: 16px;
+}
+
 body {
+  position: relative;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  color: var(--color-white);
+  background-color: var(--color-black);
 }
 
 @layer components {
+  .container {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+
+  .section {
+    padding: 1rem 2rem;
+    text-align: center;
+  }
+
   .btn {
     cursor: pointer;
     display: inline-flex;
@@ -48,6 +68,46 @@ body {
 
     @media (width <= 750px) {
       padding: 0.5rem 1rem;
+    }
+  }
+
+  .btn-icon {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.25rem;
+    border-radius: none;
+    color: var(--color-white);
+    background-color: transparent;
+    outline: none;
+
+    &:disabled {
+      cursor: default;
+      opacity: 0.5;
+    }
+
+    @media (hover: hover) {
+      cursor: pointer;
+      transition: all 0.5s ease;
+
+      &:hover:not(:disabled) {
+        scale: 1.2;
+        color: var(--color-orange-500);
+      }
+    }
+  }
+
+  .input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--color-stone-400);
+    border-radius: 0.75rem;
+    outline: none;
+
+    &:focus {
+      border: 1px solid var(--color-orange-500);
+      box-shadow: 0 0 0 1px var(--color-orange-500);
     }
   }
 }

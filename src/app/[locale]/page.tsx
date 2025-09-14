@@ -8,7 +8,7 @@ export default function MainPage() {
   const user = useUserStore((state) => state.user);
   return (
     <>
-      <main className="grid min-h-screen place-items-center p-8 font-sans">
+      <main className="container">
         {user ? (
           <>
             <MainPrivatPage />

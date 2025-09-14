@@ -5,9 +5,9 @@ export default function MainPublicPage() {
 
   return (
     <>
-      <div className="text-center space-y-6">
+      <section className="section h-screen">
         <h1 className="text-3xl font-bold">{tH('hello')}</h1>
-      </div>
+      </section>
     </>
   );
 }

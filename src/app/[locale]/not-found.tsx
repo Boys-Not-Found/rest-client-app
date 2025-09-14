@@ -4,14 +4,15 @@ import { useTranslations } from 'next-intl';
 export default function NotFoundPage() {
   const t = useTranslations('NotFoundPage');
   return (
-    <main className="h-screen flex flex-col gap-4 justify-center items-center bg-black text-orange-500">
-      <h2>{t('title')}</h2>
-
-      <p>{t('description')}</p>
-
-      <Link href="/" className="btn inverted">
-        {t('button')}
-      </Link>
+    <main className="container">
+      <section className="section h-screen flex flex-col justify-center items-center gap-5">
+        {' '}
+        <h2>{t('title')}</h2>
+        <p>{t('description')}</p>
+        <Link href="/" className="btn inverted">
+          {t('button')}
+        </Link>
+      </section>
     </main>
   );
 }
