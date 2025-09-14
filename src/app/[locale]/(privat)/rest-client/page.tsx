@@ -1,15 +1,19 @@
-'use client';
-import dynamic from 'next/dynamic';
-import { useUserStore } from '@/store/userStore';
-import Loader from '@/components/Loader/Loader';
+import { TypeLocale } from '@/types';
+import { setRequestLocale } from 'next-intl/server';
+import RestClient from './RestClient';
 
-const RestClientContent = dynamic(() => import('./RestClientContent'), {
-  ssr: false,
-  loading: () => <Loader />,
-});
+type RestClientPageProps = {
+  params: { locale: TypeLocale };
+};
 
-export default function RestClientPage() {
-  const user = useUserStore((state) => state.user);
+export default async function RestClientPage({ params }: RestClientPageProps) {
+  const { locale } = params;
 
-  return user && <RestClientContent />;
+  setRequestLocale(locale);
+
+  return (
+    <>
+      <RestClient />
+    </>
+  );
 }

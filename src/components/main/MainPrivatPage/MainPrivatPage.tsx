@@ -1,11 +1,13 @@
-import { useTranslations } from 'next-intl';
+'use client';
+
 import { useUserStore } from '@/store/userStore';
 import NavBar from '@/components/NavBar/NavBar';
+import { useTranslations } from 'next-intl';
 
 export default function MainPrivatPage() {
   const t = useTranslations('home');
-
   const user = useUserStore((state) => state.user);
+
   return (
     <>
       <div className="w-full max-w-md rounded-xl bg-white p-8 shadow-lg space-y-6">
