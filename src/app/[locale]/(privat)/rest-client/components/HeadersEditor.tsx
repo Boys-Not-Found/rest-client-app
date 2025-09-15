@@ -33,13 +33,13 @@ export default function HeadersEditor() {
             value={h.key}
             onChange={(e) => updateHeader(i, e.target.value, h.value)}
             placeholder="Header key"
-            className="flex-1 rounded border px-2 py-1"
+            className="input"
           />
           <input
             value={h.value}
             onChange={(e) => updateHeader(i, h.key, e.target.value)}
             placeholder="Header value"
-            className="flex-1 rounded border px-2 py-1"
+            className="input"
           />
           <button
             type="button"

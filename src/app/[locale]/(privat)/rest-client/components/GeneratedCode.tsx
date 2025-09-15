@@ -23,7 +23,7 @@ export default function GeneratedCode() {
   return (
     <div className="border-t pt-4">
       <h3 className="font-semibold mb-2">Generated fetch() snippet</h3>
-      <pre className="bg-gray-100 p-4 rounded text-sm overflow-auto">{code}</pre>
+      <pre className=" p-4 rounded text-sm overflow-auto text-left">{code}</pre>
     </div>
   );
 }

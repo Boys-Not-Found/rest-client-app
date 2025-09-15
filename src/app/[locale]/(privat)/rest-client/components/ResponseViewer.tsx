@@ -13,7 +13,7 @@ export default function ResponseViewer() {
         <div className="text-sm text-gray-500">{resp.statusText}</div>
       </div>
 
-      <pre className="whitespace-pre-wrap bg-gray-100 p-4 rounded text-sm">
+      <pre className="whitespace-pre-wrap bg-gray-950 text-white p-4 rounded text-sm">
         {resp.data ? JSON.stringify(resp.data, null, 2) : (resp.text ?? resp.error)}
       </pre>
     </div>

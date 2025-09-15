@@ -45,11 +45,7 @@ export default function RestClient() {
       <div className="flex gap-3 items-start">
         <MethodSelector />
         <EndpointInput />
-        <button
-          onClick={onSend}
-          disabled={loading}
-          className="rounded bg-black text-white px-4 py-2 disabled:opacity-50 cursor-pointer"
-        >
+        <button onClick={onSend} disabled={loading} className="btn">
           {loading ? 'Sending…' : 'Send'}
         </button>
       </div>
@@ -63,7 +59,7 @@ export default function RestClient() {
       {response && (
         <div className="border-t pt-4">
           <h3 className="font-semibold mb-2">Response</h3>
-          <pre className="bg-gray-100 p-4 rounded overflow-auto text-sm">
+          <pre className="p-4 rounded overflow-auto text-sm text-left">
             {JSON.stringify(response, null, 2)}
           </pre>
         </div>
