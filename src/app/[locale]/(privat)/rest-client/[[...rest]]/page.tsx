@@ -3,14 +3,13 @@
 import { useRestClient } from '@/hooks/useRestClient';
 import { buildRestRoute } from '@/lib/rest-utils';
 import { useRestStore } from '@/store/useRestStore';
-import { useParams, useRouter } from 'next/navigation';
-import React from 'react';
 
 import BodyEditor from './components/BodyEditor';
 import EndpointInput from './components/EndpointInput';
 import GeneratedCode from './components/GeneratedCode';
 import HeadersEditor from './components/HeadersEditor';
 import MethodSelector from './components/MethodSelector';
+import { useRouter } from '@/i18n/navigation';
 
 export default function RestClient() {
   const method = useRestStore((s) => s.method);
@@ -22,16 +21,13 @@ export default function RestClient() {
   const { sendRequest, loading } = useRestClient();
   const router = useRouter();
 
-  const params = useParams();
-  const locale = typeof params.locale === 'string' ? params.locale : 'en';
-
   const headersObj = Object.fromEntries(headersArr.map((h) => [h.key, h.value]).filter(([k]) => k));
 
   const onSend = async () => {
     await sendRequest();
 
     const path = buildRestRoute({
-      locale,
+      method,
       url,
       body,
       headers: headersObj,
