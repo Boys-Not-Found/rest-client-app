@@ -1,30 +1,49 @@
 'use client';
 
 import { auth } from '@/lib/firebase/client';
-import { onAuthStateChanged, reload } from 'firebase/auth';
-import { useRouter } from '@/i18n/navigation';
+import { onAuthStateChanged } from 'firebase/auth';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useLocale } from 'next-intl';
 import { useUserStore } from '@/store/userStore';
+
+type Status = 'loading' | 'success' | 'fail';
 
 export default function VerifiedPage() {
   const router = useRouter();
   const locale = useLocale();
   const setUser = useUserStore((state) => state.setUser);
-  const [status, setStatus] = useState<'loading' | 'success' | 'fail'>('loading');
+  const [status, setStatus] = useState<Status>('loading');
 
   useEffect(() => {
+    let timer: NodeJS.Timeout;
+
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        await reload(user);
+        await user.reload();
+
         if (user.emailVerified) {
           setUser({
             uid: user.uid,
             email: user.email,
             displayName: user.displayName || user.email?.split('@')[0] || 'User',
           });
-          setStatus('success');
-          setTimeout(() => router.replace('/', { locale }), 2000);
+
+          try {
+            const idToken = await user.getIdToken(true);
+            await fetch('/api/session', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ idToken }),
+              credentials: 'include',
+            });
+
+            setStatus('success');
+            timer = setTimeout(() => router.replace(`/${locale}`), 2000);
+          } catch (err) {
+            console.error('Failed to set session cookie:', err);
+            setStatus('fail');
+          }
         } else {
           setStatus('fail');
         }
@@ -33,7 +52,10 @@ export default function VerifiedPage() {
       }
     });
 
-    return () => unsubscribe();
+    return () => {
+      unsubscribe();
+      clearTimeout(timer);
+    };
   }, [router, locale, setUser]);
 
   if (status === 'loading') {
