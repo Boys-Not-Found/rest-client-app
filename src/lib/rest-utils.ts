@@ -9,13 +9,11 @@ export const b64Decode = (b64: string) =>
     : Buffer.from(b64, 'base64').toString('utf8');
 
 export function buildRestRoute({
-  locale,
   method,
   url,
   body,
   headers,
 }: {
-  locale: string;
   method?: string;
   url?: string;
   body?: string;
@@ -24,7 +22,10 @@ export function buildRestRoute({
   const encodedUrl = url ? b64Encode(url) : '';
   const encodedBody = body ? b64Encode(body) : '';
 
-  let path = `/${locale}/rest-client/${method}`;
+  let path = '/rest-client';
+  if (method) {
+    path += `/${method}`;
+  }
 
   if (encodedUrl) path += `/${encodedUrl}`;
   if (encodedBody) path += `/${encodedBody}`;

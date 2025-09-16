@@ -53,6 +53,10 @@
     "value": "Value",
     "save": "Save",
     "cancel": "Cancel",
-    "no-variables": "No variables yet"
+    "no-variables": "No variables yet",
+    "exists": "Variable with this key already exists",
+    "added": "Variable added",
+    "deleted": "Variable deleted",
+    "cleared": "All variables cleared"
   }
 }
