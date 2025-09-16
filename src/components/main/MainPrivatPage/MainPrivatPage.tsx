@@ -1,7 +1,6 @@
 'use client';
 
 import { useUserStore } from '@/store/userStore';
-import NavBar from '@/components/NavBar/NavBar';
 import { useTranslations } from 'next-intl';
 
 export default function MainPrivatPage() {
@@ -10,8 +9,7 @@ export default function MainPrivatPage() {
 
   return (
     <>
-      <section className="section h-screen flex flex-col gap-5">
-        <NavBar />
+      <section className="section flex flex-col gap-5">
         <h1 className="text-2xl font-bold text-center">
           {t('welcome')}
           <span>{user?.displayName || 'user'}</span>

@@ -10,7 +10,13 @@
     "description": "Could not find requested resource",
     "button": "Return Home"
   },
-  "home": { "hello": "Welcome to REST Client App", "welcome": "Welcome, " },
+  "home": {
+    "hello": "Welcome to REST Client App",
+    "welcome": "Welcome, ",
+    "about": "About the Project",
+    "description": "This application was created during the RS School React Course by the Boys-Not-Found team. It demonstrates how to work with RESTful APIs, handle requests, manage application state, and provide useful tools for developers. The project reflects our growth as developers and our passion for learning modern web technologies.",
+    "stack": "Tech Stack: Next.js, Tailwind CSS, Zustand, Firebase."
+  },
   "header": {
     "about": "About",
     "main": "Main"
