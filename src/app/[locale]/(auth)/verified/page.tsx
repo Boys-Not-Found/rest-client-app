@@ -40,8 +40,7 @@ export default function VerifiedPage() {
 
             setStatus('success');
             timer = setTimeout(() => router.replace(`/${locale}`), 2000);
-          } catch (err) {
-            console.error('Failed to set session cookie:', err);
+          } catch {
             setStatus('fail');
           }
         } else {
