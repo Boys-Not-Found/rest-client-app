@@ -45,18 +45,23 @@ const Header = () => {
         <button onClick={toggleLocale} className="btn-icon">
           {locale === 'en' ? 'RU' : 'EN'}
         </button>
-        <div>
+        <div className="flex gap-4">
           {user ? (
-            <SignOutButton />
+            <>
+              <Link href="/" locale={locale} className="btn-icon">
+                {t('main')}
+              </Link>
+              <SignOutButton />
+            </>
           ) : (
-            <div className="flex gap-4">
+            <>
               <Link href="/sign-in" locale={locale} className="btn-icon">
                 {t('sign-in')}
               </Link>
               <Link href="/sign-up" locale={locale} className="btn-icon">
                 {t('sign-up')}
               </Link>
-            </div>
+            </>
           )}
         </div>
       </section>

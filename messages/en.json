@@ -47,7 +47,8 @@
     "verify-email": "Check your email inbox to verify your account",
     "no-account": "No account?",
     "create-one": "Create one",
-    "forgot-password": "Forgot password?"
+    "forgot-password": "Forgot password?",
+    "main": "Main"
   },
   "vars": {
     "title": "Variables",
