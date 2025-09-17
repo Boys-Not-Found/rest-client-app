@@ -18,10 +18,6 @@
     "stack": "Стек технологий: Next.js, Tailwind CSS, Zustand, Firebase.",
     "loginRequired": "Необходимо войти в систему"
   },
-  "header": {
-    "about": "О нас",
-    "main": "Главная"
-  },
   "navbar": { "history": "История", "variables": "Переменные", "rest-client": "Rest-клиент" },
   "auth": {
     "name": "Полное имя",
@@ -48,7 +44,8 @@
     "verify-email": "Проверьте свою почту для подтверждения аккаунта",
     "no-account": "Нет аккаунта?",
     "create-one": "Создать новый",
-    "forgot-password": "Забыли пароль?"
+    "forgot-password": "Забыли пароль?",
+    "main": "Главная"
   },
   "vars": {
     "title": "Переменные",
@@ -65,5 +62,9 @@
     "added": "Переменная добавлена",
     "deleted": "Переменная удалена",
     "cleared": "Все переменные очищены"
+  },
+  "history": {
+    "title": "История",
+    "no-requests": "Пока нет запросов"
   }
 }

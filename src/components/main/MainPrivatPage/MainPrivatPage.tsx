@@ -1,6 +1,6 @@
 'use client';
 
-import { useUserStore } from '@/store/userStore';
+import { useUserStore } from '@/store/useUserStore';
 import { useTranslations } from 'next-intl';
 
 export default function MainPrivatPage() {

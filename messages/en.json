@@ -18,10 +18,6 @@
     "stack": "Tech Stack: Next.js, Tailwind CSS, Zustand, Firebase.",
     "loginRequired": "Please log in"
   },
-  "header": {
-    "about": "About",
-    "main": "Main"
-  },
   "navbar": { "history": "History", "variables": "Variables", "rest-client": "Rest-client" },
   "auth": {
     "name": "Full Name",
@@ -48,7 +44,8 @@
     "verify-email": "Check your email inbox to verify your account",
     "no-account": "No account?",
     "create-one": "Create one",
-    "forgot-password": "Forgot password?"
+    "forgot-password": "Forgot password?",
+    "main": "Main"
   },
   "vars": {
     "title": "Variables",
@@ -65,5 +62,9 @@
     "added": "Variable added",
     "deleted": "Variable deleted",
     "cleared": "All variables cleared"
+  },
+  "history": {
+    "title": "History",
+    "no-requests": "No requests yet"
   }
 }

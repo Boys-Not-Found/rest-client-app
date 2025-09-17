@@ -1,6 +1,6 @@
 'use client';
 
-import { useUserStore } from '@/store/userStore';
+import { useUserStore } from '@/store/useUserStore';
 import MainPrivatPage from '@/components/main/MainPrivatPage/MainPrivatPage';
 import MainPublicPage from '@/components/main/MainPublicPage/MainPublicPage';
 import { useTranslations } from 'next-intl';
