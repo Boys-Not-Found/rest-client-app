@@ -15,9 +15,28 @@ export async function GET() {
   const snap = await adminDb
     .collection('requests')
     .where('userId', '==', decoded.uid)
-    .orderBy('requestTimestamp', 'desc')
+    //.orderBy('requestTimestamp', 'desc')
     .get();
 
   const requests = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
   return NextResponse.json(requests);
+}
+export async function POST(req: Request) {
+  const cookieStore = await cookies();
+  const sessionCookie = cookieStore.get('session')?.value;
+
+  if (!sessionCookie) {
+    return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
+  }
+
+  const decoded = await adminAuth.verifySessionCookie(sessionCookie, true);
+  const data = await req.json();
+
+  await adminDb.collection('requests').add({
+    userId: decoded.uid,
+    ...data,
+    requestTimestamp: new Date(),
+  });
+
+  return NextResponse.json({ success: true });
 }
