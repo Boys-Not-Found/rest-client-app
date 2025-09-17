@@ -2,7 +2,7 @@
 
 import { useRouter, Link } from '@/i18n/navigation';
 import { auth, googleProvider } from '@/lib/firebase/client';
-import { useUserStore } from '@/store/userStore';
+import { useUserStore } from '@/store/useUserStore';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FirebaseError } from 'firebase/app';
 import {

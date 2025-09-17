@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 
 export default function middleware(request: NextRequest) {
   const cookieHeader = request.headers.get('cookie') || '';
-  const isAuth = cookieHeader.includes('isAuth=true');
+  const isAuth = cookieHeader.includes('session');
 
   const { pathname } = request.nextUrl;
   const privateRoutes = ['/history', '/variables', '/rest-client'];

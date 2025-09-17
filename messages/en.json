@@ -17,10 +17,6 @@
     "description": "This application was created during the RS School React Course by the Boys-Not-Found team. It demonstrates how to work with RESTful APIs, handle requests, manage application state, and provide useful tools for developers. The project reflects our growth as developers and our passion for learning modern web technologies.",
     "stack": "Tech Stack: Next.js, Tailwind CSS, Zustand, Firebase."
   },
-  "header": {
-    "about": "About",
-    "main": "Main"
-  },
   "navbar": { "history": "History", "variables": "Variables", "rest-client": "Rest-client" },
   "auth": {
     "name": "Full Name",
@@ -47,7 +43,8 @@
     "verify-email": "Check your email inbox to verify your account",
     "no-account": "No account?",
     "create-one": "Create one",
-    "forgot-password": "Forgot password?"
+    "forgot-password": "Forgot password?",
+    "main": "Main"
   },
   "vars": {
     "title": "Variables",
@@ -64,5 +61,9 @@
     "added": "Variable added",
     "deleted": "Variable deleted",
     "cleared": "All variables cleared"
+  },
+  "history": {
+    "title": "History",
+    "no-requests": "No requests yet"
   }
 }
