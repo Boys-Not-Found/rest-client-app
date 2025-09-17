@@ -1,21 +1,21 @@
-//TODO:
-//сюда перенести содержание  page.tsx
-//и удалить page.tsx
-//потом переименовать lazyPage.tsx в page.tsx
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { TypeLocale } from '@/types';
+import HistoryList from './HistoryList';
 
-type Request = {
+type RequestRecord = {
+  id: string;
   method: string;
   url: string;
-  status: number;
+  statusCode: number;
+  latency: number;
+  requestTimestamp: { seconds: number; nanoseconds: number };
 };
 
 export default async function HistoryContent({
   requests,
   params,
 }: {
-  requests: Request[];
+  requests: RequestRecord[];
   params: { locale: TypeLocale };
 }) {
   const { locale } = params;
@@ -26,16 +26,5 @@ export default async function HistoryContent({
     return <p>{t('no-requests')}</p>;
   }
 
-  return (
-    <ul>
-      {requests.map((r, i) => (
-        <li key={i}>
-          <a href={`/rest-client/${r.method}/${btoa(r.url)}`}>
-            [{r.method}] {r.url}
-          </a>
-          <span>{r.status}</span>
-        </li>
-      ))}
-    </ul>
-  );
+  return <HistoryList requests={requests} />;
 }
