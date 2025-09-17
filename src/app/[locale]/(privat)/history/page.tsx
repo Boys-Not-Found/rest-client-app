@@ -1,19 +1,24 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { TypeLocale } from '@/types';
 import HistoryList from './HistoryList';
+import type { TypeLocale } from '@/types';
 
-type Props = { params: { locale: TypeLocale } };
+type Props = { params: Promise<{ locale: TypeLocale }> };
 
 export default async function HistoryPage({ params }: Props) {
-  const { locale } = params;
+  const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations('home');
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/history`, {
+  const baseUrl =
+    process.env.NEXT_PUBLIC_BASE_URL ?? `http://${process.env.VERCEL_URL ?? 'localhost:3000'}`;
+
+  const res = await fetch(`${baseUrl}/api/history`, {
     cache: 'no-store',
-    credentials: 'include',
   });
-  if (!res.ok) return <p>{t('loginRequired')}</p>;
+
+  if (!res.ok) {
+    return <p>{t('loginRequired')}</p>;
+  }
 
   const requests = await res.json();
 

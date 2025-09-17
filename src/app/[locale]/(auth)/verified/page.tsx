@@ -2,7 +2,7 @@
 
 import { auth } from '@/lib/firebase/client';
 import { onAuthStateChanged } from 'firebase/auth';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/i18n/navigation';
 import { useEffect, useState } from 'react';
 import { useLocale } from 'next-intl';
 import { useUserStore } from '@/store/userStore';
