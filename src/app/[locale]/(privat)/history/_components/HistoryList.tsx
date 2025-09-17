@@ -1,5 +1,3 @@
-'use client';
-
 import Link from 'next/link';
 
 type RequestRecord = {
@@ -12,16 +10,16 @@ type RequestRecord = {
 };
 
 export default function HistoryList({ requests }: { requests: RequestRecord[] }) {
-  if (!requests || requests.length === 0) {
-    return (
-      <div className="text-center mt-10">
-        <p className="mb-4">You have not executed any requests yet.</p>
-        <Link href="/rest-client" className="text-blue-600 underline">
-          Go to REST client
-        </Link>
-      </div>
-    );
-  }
+  // if (!requests || requests.length === 0) {
+  //   return (
+  //     <div className="text-center mt-10">
+  //       <p className="mb-4">You have not executed any requests yet.</p>
+  //       <Link href="/rest-client" className="text-blue-600 underline">
+  //         Go to REST client
+  //       </Link>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="max-w-4xl mx-auto p-6">
