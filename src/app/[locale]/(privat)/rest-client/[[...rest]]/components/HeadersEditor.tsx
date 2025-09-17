@@ -1,12 +1,16 @@
 'use client';
+import { applyVariables } from '@/lib/variables';
 import { useRestStore } from '@/store/useRestStore';
+import { HeaderRow } from './HeaderRow';
 
 export default function HeadersEditor() {
   const headers = useRestStore((s) => s.headers);
   const setHeaders = useRestStore((s) => s.setHeaders);
 
   const updateHeader = (idx: number, key: string, value: string) => {
-    const next = headers.map((h, i) => (i === idx ? { ...h, key, value } : h));
+    const next = headers.map((h, i) =>
+      i === idx ? { ...h, key: applyVariables(key), value: applyVariables(value) } : h
+    );
     setHeaders(next);
   };
 
@@ -18,37 +22,20 @@ export default function HeadersEditor() {
     <div className="space-y-2">
       <div className="flex justify-between items-center">
         <h3 className="font-medium">Headers</h3>
-        <button
-          type="button"
-          onClick={addHeader}
-          className="rounded bg-blue-500 px-2 py-1 text-white text-sm"
-        >
+        <button type="button" onClick={addHeader} className="btn-icon">
           + Add
         </button>
       </div>
 
       {headers.map((h, i) => (
-        <div key={i} className="flex gap-2">
-          <input
-            value={h.key}
-            onChange={(e) => updateHeader(i, e.target.value, h.value)}
-            placeholder="Header key"
-            className="input"
-          />
-          <input
-            value={h.value}
-            onChange={(e) => updateHeader(i, h.key, e.target.value)}
-            placeholder="Header value"
-            className="input"
-          />
-          <button
-            type="button"
-            onClick={() => removeHeader(i)}
-            className="rounded bg-red-500 px-2 text-white text-sm"
-          >
-            ✕
-          </button>
-        </div>
+        <HeaderRow
+          key={h.id}
+          id={h.id}
+          keyValue={h.key}
+          value={h.value}
+          onChange={(key, value) => updateHeader(i, key, value)}
+          onRemove={() => removeHeader(i)}
+        />
       ))}
     </div>
   );

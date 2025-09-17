@@ -3,7 +3,7 @@
 import { Link, usePathname, useRouter } from '@/i18n/navigation';
 import { useLocale, useTranslations } from 'use-intl';
 import { SiPostman } from 'react-icons/si';
-import { useUserStore } from '@/store/userStore';
+import { useUserStore } from '@/store/useUserStore';
 
 import s from './Header.module.scss';
 import { useEffect, useState } from 'react';

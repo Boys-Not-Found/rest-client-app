@@ -1,6 +1,6 @@
 'use client';
 import dynamic from 'next/dynamic';
-import { useUserStore } from '@/store/userStore';
+import { useUserStore } from '@/store/useUserStore';
 import Loader from '@/components/Loader/Loader';
 
 const RestClientContent = dynamic(() => import('./components/RestClientContent'), {

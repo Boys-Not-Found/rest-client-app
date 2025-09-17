@@ -1,5 +1,5 @@
 'use client';
-import { useVariablesStore } from '@/store/variablesStore';
+import { useVariablesStore } from '@/store/useVariablesStore';
 import { useTranslations } from 'next-intl';
 import { useDeferredValue, useRef } from 'react';
 import toast from 'react-hot-toast';
