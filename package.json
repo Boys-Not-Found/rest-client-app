@@ -27,6 +27,8 @@
     "js-base64": "^3.7.8",
     "next": "15.5.2",
     "next-intl": "^4.3.5",
+    "postman-code-generators": "^2.0.0",
+    "postman-collection": "^5.1.1",
     "react": "19.1.0",
     "react-ace": "^14.0.1",
     "react-dom": "19.1.0",
