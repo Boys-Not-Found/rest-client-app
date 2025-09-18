@@ -64,6 +64,7 @@
   },
   "history": {
     "title": "History",
-    "no-requests": "No requests yet"
+    "no-requests": "No requests yet",
+    "loginRequired": "Please log in"
   }
 }
