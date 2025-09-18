@@ -24,7 +24,25 @@ export default function RestClientContent() {
   const headersObj = Object.fromEntries(headersArr.map((h) => [h.key, h.value]).filter(([k]) => k));
 
   const onSend = async () => {
+    const start = Date.now();
+
     await sendRequest();
+
+    if (response) {
+      const latency = Date.now() - start;
+      await fetch('/api/history', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          method,
+          url,
+          headers: headersObj,
+          body,
+          statusCode: response.status,
+          latency,
+        }),
+      });
+    }
 
     const path = buildRestRoute({
       method,
