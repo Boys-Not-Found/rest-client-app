@@ -24,25 +24,12 @@ export default function RestClientContent() {
   const headersObj = Object.fromEntries(headersArr.map((h) => [h.key, h.value]).filter(([k]) => k));
 
   const onSend = async () => {
-    const start = Date.now();
+    const startTime = performance.now();
 
     await sendRequest();
+    const latency = performance.now() - startTime;
 
-    if (response) {
-      const latency = Date.now() - start;
-      await fetch('/api/history', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          method,
-          url,
-          headers: headersObj,
-          body,
-          statusCode: response.status,
-          latency,
-        }),
-      });
-    }
+    const resp = useRestStore.getState().response;
 
     const path = buildRestRoute({
       method,
@@ -52,6 +39,28 @@ export default function RestClientContent() {
     });
 
     router.replace(path);
+
+    if (resp) {
+      await fetch('/api/requests', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          method,
+          url,
+          headers: headersObj,
+          body,
+          response: {
+            status: resp.status,
+            statusText: resp.statusText,
+            data: resp.data,
+            text: resp.text,
+            error: resp.error,
+          },
+          latency,
+          requestTimestamp: new Date().toISOString(),
+        }),
+      });
+    }
   };
 
   return (

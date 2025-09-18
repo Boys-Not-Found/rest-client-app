@@ -6,9 +6,12 @@ type RequestRecord = {
   id: string;
   method: string;
   url: string;
-  statusCode: number;
-  latency: number;
-  requestTimestamp: { seconds: number; nanoseconds: number };
+  statusCode: number | null;
+  latency: number | null;
+  requestSize: number | null;
+  responseSize: number | null;
+  errorDetails: string | null;
+  requestTimestamp: string;
 };
 
 export default async function HistoryContent({
