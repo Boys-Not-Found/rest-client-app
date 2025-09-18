@@ -1,5 +1,3 @@
-import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { TypeLocale } from '@/types';
 import HistoryList from './HistoryList';
 
 type RequestRecord = {
@@ -14,20 +12,6 @@ type RequestRecord = {
   requestTimestamp: string;
 };
 
-export default async function HistoryContent({
-  requests,
-  params,
-}: {
-  requests: RequestRecord[];
-  params: { locale: TypeLocale };
-}) {
-  const { locale } = params;
-  setRequestLocale(locale);
-  const t = await getTranslations('history');
-
-  if (!requests.length) {
-    return <p>{t('no-requests')}</p>;
-  }
-
+export default async function HistoryContent({ requests }: { requests: RequestRecord[] }) {
   return <HistoryList requests={requests} />;
 }
