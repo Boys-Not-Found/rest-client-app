@@ -1,12 +1,12 @@
 'use client';
 
-import { useUserStore } from '@/store/useUserStore';
 import MainPrivatPage from '@/components/main/MainPrivatPage/MainPrivatPage';
 import MainPublicPage from '@/components/main/MainPublicPage/MainPublicPage';
 import { useTranslations } from 'next-intl';
+import { useAuth } from '@/context/useAuth';
 
 export default function MainPage() {
-  const user = useUserStore((state) => state.user);
+  const { user } = useAuth();
   const t = useTranslations('home');
   return (
     <>

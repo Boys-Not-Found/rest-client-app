@@ -1,5 +1,5 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { TypeLocale } from '@/types';
+import { TypeLocale } from '@/types/types';
 import dynamic from 'next/dynamic';
 import Loader from '@/components/Loader/Loader';
 import { cookies } from 'next/headers';

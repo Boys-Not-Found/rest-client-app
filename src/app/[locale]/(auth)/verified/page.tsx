@@ -73,7 +73,7 @@ export default function VerifiedPage() {
         </p>
         <button
           className="mt-4 px-4 py-2 bg-black text-white rounded"
-          onClick={() => router.replace('/auth/sign-in')}
+          onClick={() => router.replace('/sign-in')}
         >
           Go to Sign In
         </button>

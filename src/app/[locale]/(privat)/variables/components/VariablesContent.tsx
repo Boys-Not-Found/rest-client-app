@@ -63,12 +63,8 @@ export default function VariablesContent() {
         ))}
       <form onSubmit={(e) => e.preventDefault()} className="flex flex-col gap-4">
         <div className="flex justify-between gap-4 items-end">
-          <label htmlFor="id">
-            <input ref={keyRef} type="text" placeholder="key" className="input" id="key" />
-          </label>
-          <label htmlFor="value">
-            <input ref={valueRef} type="text" placeholder="value" className="input" id="value" />
-          </label>
+          <input ref={keyRef} type="text" placeholder="key" className="input" name="key" />
+          <input ref={valueRef} type="text" placeholder="value" className="input" name="value" />
           <button className="btn-icon text-3xl" onClick={handleAdd}>
             <MdOutlinePlaylistAdd />
           </button>

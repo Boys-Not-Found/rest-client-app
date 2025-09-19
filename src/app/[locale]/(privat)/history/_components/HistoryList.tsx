@@ -1,22 +1,22 @@
 import { Link } from '@/i18n/navigation';
-
-type RequestRecord = {
-  id: string;
-  method: string;
-  url: string;
-  statusCode: number | null;
-  latency: number | null;
-  requestSize: number | null;
-  responseSize: number | null;
-  errorDetails: string | null;
-  requestTimestamp: string;
-};
+import { useTranslations } from 'next-intl';
+import type { RequestRecord } from '@/types/types';
 
 export default function HistoryList({ requests }: { requests: RequestRecord[] }) {
+  const t = useTranslations('history');
+  if (!requests.length) {
+    return (
+      <div className="text-center mt-10">
+        <p className="mb-4">{t('no-requests')}</p>
+        <Link href="/rest-client" className="btn inverted">
+          {t('rest')}
+        </Link>
+      </div>
+    );
+  }
   return (
     <div className="max-w-4xl mx-auto p-6">
-      <h1 className="text-xl font-bold mb-4">Request History</h1>
-      <ul className="space-y-4">
+      <ul className="flex flex-col gap-4">
         {requests.map((req) => (
           <li key={req.id} className="border p-4 rounded hover:bg-gray-700 transition">
             <Link

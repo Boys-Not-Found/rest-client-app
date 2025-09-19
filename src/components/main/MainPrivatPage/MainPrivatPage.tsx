@@ -1,11 +1,11 @@
 'use client';
 
-import { useUserStore } from '@/store/useUserStore';
+import { useAuth } from '@/context/useAuth';
 import { useTranslations } from 'next-intl';
 
 export default function MainPrivatPage() {
   const t = useTranslations('home');
-  const user = useUserStore((state) => state.user);
+  const { user } = useAuth();
 
   return (
     <>

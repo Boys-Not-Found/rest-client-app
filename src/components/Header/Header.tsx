@@ -3,22 +3,19 @@
 import { Link, usePathname, useRouter } from '@/i18n/navigation';
 import { useLocale, useTranslations } from 'use-intl';
 import { SiPostman } from 'react-icons/si';
-import { useUserStore } from '@/store/useUserStore';
 
 import s from './Header.module.scss';
 import { useEffect, useState } from 'react';
 import SignOutButton from '@/components/Auth/SignOutButton';
 import NavBar from '../NavBar/NavBar';
-
+import { useAuth } from '@/context/useAuth';
 const Header = () => {
   const t = useTranslations('auth');
 
   const router = useRouter();
   const locale = useLocale();
   const pathname = usePathname();
-
-  const user = useUserStore((state) => state.user);
-
+  const { user } = useAuth();
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {

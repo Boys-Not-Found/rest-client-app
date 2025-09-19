@@ -65,6 +65,7 @@
   "history": {
     "title": "History",
     "no-requests": "You have not executed any requests yet. Try:",
-    "loginRequired": "Please log in"
+    "loginRequired": "Please log in",
+    "rest": "Go to REST client"
   }
 }
