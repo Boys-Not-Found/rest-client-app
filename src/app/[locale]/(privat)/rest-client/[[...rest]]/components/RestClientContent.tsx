@@ -10,20 +10,55 @@ import GeneratedCode from './GeneratedCode';
 import HeadersEditor from './HeadersEditor';
 import MethodSelector from './MethodSelector';
 import { useRouter } from '@/i18n/navigation';
+import { useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 export default function RestClientContent() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
   const method = useRestStore((s) => s.method);
   const url = useRestStore((s) => s.url);
   const headersArr = useRestStore((s) => s.headers);
   const body = useRestStore((s) => s.body);
   const { response } = useRestStore();
 
-  const { sendRequest, loading } = useRestClient();
-  const router = useRouter();
+  const setMethod = useRestStore((s) => s.setMethod);
+  const setUrl = useRestStore((s) => s.setUrl);
+  const setBody = useRestStore((s) => s.setBody);
+  const setHeaders = useRestStore((s) => s.setHeaders);
 
-  const headersObj = Object.fromEntries(headersArr.map((h) => [h.key, h.value]).filter(([k]) => k));
+  const { sendRequest, loading } = useRestClient();
+
+  useEffect(() => {
+    const qpMethod = searchParams.get('method');
+    const qpUrl = searchParams.get('url');
+    const qpBody = searchParams.get('body');
+    const qpHeaders = searchParams.get('headers');
+
+    if (qpMethod) setMethod(qpMethod);
+    if (qpUrl) setUrl(qpUrl);
+    if (qpBody) setBody(qpBody);
+
+    if (qpHeaders) {
+      try {
+        const parsed: Record<string, string> = JSON.parse(decodeURIComponent(qpHeaders));
+        const headersArray = Object.entries(parsed).map(([key, value]) => ({
+          id: crypto.randomUUID(),
+          key,
+          value: String(value),
+        }));
+        setHeaders(headersArray);
+      } catch {
+        setHeaders([]);
+      }
+    }
+  }, [searchParams, setMethod, setUrl, setBody, setHeaders]);
 
   const onSend = async () => {
+    const headersObj = Object.fromEntries(
+      headersArr.map((h) => [h.key, h.value]).filter(([k]) => k)
+    );
     const startTime = performance.now();
 
     await sendRequest();

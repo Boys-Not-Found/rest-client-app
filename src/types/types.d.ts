@@ -10,4 +10,6 @@ export type RequestRecord = {
   responseSize: number | null;
   errorDetails: string | null;
   requestTimestamp: string;
+  body: string;
+  headers?: Record<string, string>;
 };

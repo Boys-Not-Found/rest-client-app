@@ -20,8 +20,9 @@ export default function HistoryList({ requests }: { requests: RequestRecord[] })
         {requests.map((req) => (
           <li key={req.id} className="border p-4 rounded hover:bg-gray-700 transition">
             <Link
-              href={`/rest-client?method=${req.method}&url=${encodeURIComponent(req.url)}`}
-              className="block"
+              href={`/rest-client?method=${req.method}&url=${encodeURIComponent(req.url)}
+        &body=${encodeURIComponent(req.body || '')}
+        &headers=${encodeURIComponent(JSON.stringify(req.headers))}`}
             >
               <div className="flex justify-between mb-1">
                 <span className="font-mono font-semibold">{req.method}</span>
