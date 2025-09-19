@@ -1,4 +1,5 @@
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
+import { useTranslations } from 'next-intl';
 
 type RequestRecord = {
   id: string;
@@ -13,12 +14,13 @@ type RequestRecord = {
 };
 
 export default function HistoryList({ requests }: { requests: RequestRecord[] }) {
+  const t = useTranslations('history');
   if (!requests.length) {
     return (
       <div className="text-center mt-10">
-        <p className="mb-4">You have not executed any requests yet.</p>
-        <Link href="/rest-client" className="text-blue-600 underline">
-          Go to REST client
+        <p className="mb-4">{t('no-requests')}</p>
+        <Link href="/rest-client" className="btn inverted">
+          {t('rest')}
         </Link>
       </div>
     );
@@ -26,10 +28,9 @@ export default function HistoryList({ requests }: { requests: RequestRecord[] })
 
   return (
     <div className="max-w-4xl mx-auto p-6">
-      <h1 className="text-xl font-bold mb-4">Request History</h1>
-      <ul className="space-y-4">
+      <ul className="flex flex-col gap-4">
         {requests.map((req) => (
-          <li key={req.id} className="border p-4 rounded hover:bg-gray-50 transition">
+          <li key={req.id} className="btn">
             <Link
               href={`/rest-client?method=${req.method}&url=${encodeURIComponent(req.url)}`}
               className="block"
