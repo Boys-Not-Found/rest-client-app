@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import * as codegen from 'postman-code-generators';
-import * as sdk from 'postman-collection';
+import sdk from 'postman-collection';
 
 export const runtime = 'nodejs';
 
@@ -76,20 +76,15 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const headers = new sdk.HeaderList(
-    null,
-    (data.headers ?? [])
-      .filter((h) => (h.key || '').trim())
-      .map((h) => ({ key: h.key, value: String(h.value ?? '') }))
-  );
-
   const raw = normalizeBody(data.method, data.body);
   const body = raw ? new sdk.RequestBody({ mode: 'raw', raw }) : undefined;
 
   const pmRequest = new sdk.Request({
     method: data.method,
     url: data.url,
-    header: headers,
+    header: (data.headers ?? [])
+      .filter((h) => (h.key || '').trim())
+      .map((h) => new sdk.Header({ key: h.key, value: String(h.value ?? '') })),
     body,
   });
 

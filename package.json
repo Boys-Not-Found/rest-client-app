@@ -20,6 +20,7 @@
   "dependencies": {
     "@heroui/react": "^2.8.4",
     "@hookform/resolvers": "^5.2.1",
+    "@types/postman-collection": "^3.5.11",
     "clsx": "^2.1.1",
     "firebase": "^12.2.1",
     "firebase-admin": "^13.5.0",
