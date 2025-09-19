@@ -20,8 +20,7 @@ export default async function HistoryPage({ params }: PropsHistoryPage) {
   const cookieStore = await cookies();
   const cookieHeader = cookieStore.toString();
 
-  const baseUrl =
-    process.env.NEXT_PUBLIC_BASE_URL ?? `http://${process.env.VERCEL_URL ?? 'localhost:3000'}`;
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? `http://${process.env.VERCEL_URL}`;
 
   const res = await fetch(`${baseUrl}/api/history`, {
     cache: 'no-store',
