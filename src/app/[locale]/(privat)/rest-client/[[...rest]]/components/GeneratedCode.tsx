@@ -10,9 +10,9 @@ type Target = {
 };
 
 const TARGETS: Target[] = [
-  { label: 'cURL', language: 'curl', variant: 'cURL' },
   { label: 'JavaScript (Fetch)', language: 'javascript', variant: 'Fetch' },
   { label: 'JavaScript (XHR)', language: 'javascript', variant: 'XHR' },
+  { label: 'cURL', language: 'curl', variant: 'cURL' },
   { label: 'NodeJS', language: 'nodejs', variant: 'Native' },
   { label: 'Python', language: 'python', variant: 'Requests' },
   { label: 'Java', language: 'java', variant: 'OkHttp' },
@@ -101,16 +101,14 @@ export default function GeneratedCode() {
           <button
             key={t.label}
             onClick={() => setTab(i)}
-            className={`px-3 py-1 rounded text-sm border ${
-              i === tab ? 'bg-black text-white' : 'bg-white'
-            }`}
+            className={`btn py-0.5 px-1 ${i !== tab && 'inverted'}`}
           >
             {t.label}
           </button>
         ))}
       </div>
 
-      <pre className="bg-gray-900 text-gray-100 p-4 rounded overflow-auto text-sm min-h-[160px] font-mono not-prose whitespace-pre">
+      <pre className="p-4 rounded border-1 overflow-auto text-sm min-h-[160px] font-mono not-prose whitespace-pre text-left">
         {notEnough ? (
           'Provide method and URL'
         ) : loading ? (

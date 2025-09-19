@@ -13,25 +13,26 @@ export function Footer() {
   ];
 
   return (
-    <footer className="w-full border-t border-divider bg-background text-foreground">
+    <footer className="w-full border-t border-dividerd">
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 py-6 md:flex-row">
         <div className="flex flex-wrap justify-center gap-4">
           {authors.map((author) => (
-            <Link key={author.url} isExternal href={author.url} className="text-primary text-sm">
+            <Link
+              key={author.url}
+              isExternal
+              href={author.url}
+              className="btn-icon text-orange-500"
+            >
               {author.name}
             </Link>
           ))}
         </div>
 
-        <Link
-          isExternal
-          href="https://rs.school/courses/reactjs"
-          className="flex items-center gap-2"
-        >
-          <Image src="/images/rss-logo.svg" alt="Course Logo" width={32} height={32} />
+        <Link isExternal href="https://rs.school/courses/reactjs" className="btn-icon">
+          <Image src="/images/rss-logo.svg" alt="Course Logo" width={50} height={50} />
         </Link>
 
-        <p className="text-sm">{year}</p>
+        <p className="text-md text-orange-500">Boys-Not-Found © {year}</p>
       </div>
     </footer>
   );

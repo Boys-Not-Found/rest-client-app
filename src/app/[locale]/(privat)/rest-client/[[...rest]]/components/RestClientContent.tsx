@@ -3,16 +3,15 @@
 import { useRestClient } from '@/hooks/useRestClient';
 import { buildRestRoute } from '@/lib/rest-utils';
 import { useRestStore } from '@/store/useRestStore';
-import { useParams, useRouter } from 'next/navigation';
-import React from 'react';
 
-import BodyEditor from './components/BodyEditor';
-import EndpointInput from './components/EndpointInput';
-import GeneratedCode from './components/GeneratedCode';
-import HeadersEditor from './components/HeadersEditor';
-import MethodSelector from './components/MethodSelector';
+import BodyEditor from './BodyEditor';
+import EndpointInput from './EndpointInput';
+import GeneratedCode from './GeneratedCode';
+import HeadersEditor from './HeadersEditor';
+import MethodSelector from './MethodSelector';
+import { useRouter } from '@/i18n/navigation';
 
-export default function RestClient() {
+export default function RestClientContent() {
   const method = useRestStore((s) => s.method);
   const url = useRestStore((s) => s.url);
   const headersArr = useRestStore((s) => s.headers);
@@ -22,22 +21,46 @@ export default function RestClient() {
   const { sendRequest, loading } = useRestClient();
   const router = useRouter();
 
-  const params = useParams();
-  const locale = typeof params.locale === 'string' ? params.locale : 'en';
-
   const headersObj = Object.fromEntries(headersArr.map((h) => [h.key, h.value]).filter(([k]) => k));
 
   const onSend = async () => {
+    const startTime = performance.now();
+
     await sendRequest();
+    const latency = performance.now() - startTime;
+
+    const resp = useRestStore.getState().response;
 
     const path = buildRestRoute({
-      locale,
+      method,
       url,
       body,
       headers: headersObj,
     });
 
     router.replace(path);
+
+    if (resp) {
+      await fetch('/api/requests', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          method,
+          url,
+          headers: headersObj,
+          body,
+          response: {
+            status: resp.status,
+            statusText: resp.statusText,
+            data: resp.data,
+            text: resp.text,
+            error: resp.error,
+          },
+          latency,
+          requestTimestamp: new Date().toISOString(),
+        }),
+      });
+    }
   };
 
   return (
@@ -45,11 +68,7 @@ export default function RestClient() {
       <div className="flex gap-3 items-start">
         <MethodSelector />
         <EndpointInput />
-        <button
-          onClick={onSend}
-          disabled={loading}
-          className="rounded bg-black text-white px-4 py-2 disabled:opacity-50 cursor-pointer"
-        >
+        <button onClick={onSend} disabled={loading} className="btn">
           {loading ? 'Sending…' : 'Send'}
         </button>
       </div>
@@ -63,7 +82,7 @@ export default function RestClient() {
       {response && (
         <div className="border-t pt-4">
           <h3 className="font-semibold mb-2">Response</h3>
-          <pre className="bg-gray-100 p-4 rounded overflow-auto text-sm">
+          <pre className="p-4 rounded overflow-auto text-sm text-left">
             {JSON.stringify(response, null, 2)}
           </pre>
         </div>

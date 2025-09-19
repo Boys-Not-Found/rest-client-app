@@ -9,11 +9,7 @@ export default function MethodSelector() {
   const setMethod = useRestStore((s) => s.setMethod);
 
   return (
-    <select
-      value={method}
-      onChange={(e) => setMethod(e.target.value)}
-      className="border rounded px-2 py-1 bg-white"
-    >
+    <select value={method} onChange={(e) => setMethod(e.target.value)} className="input h-10">
       {METHODS.map((m) => (
         <option key={m} value={m}>
           {m}

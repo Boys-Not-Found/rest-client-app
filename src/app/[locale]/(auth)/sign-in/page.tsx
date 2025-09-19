@@ -2,7 +2,7 @@
 
 import { useRouter, Link } from '@/i18n/navigation';
 import { auth, googleProvider } from '@/lib/firebase/client';
-import { useUserStore } from '@/store/userStore';
+import { useUserStore } from '@/store/useUserStore';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FirebaseError } from 'firebase/app';
 import {
@@ -10,6 +10,7 @@ import {
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
+  getIdToken,
 } from 'firebase/auth';
 import { useLocale, useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
@@ -47,13 +48,22 @@ export default function SignInPage() {
       const freshUser = auth.currentUser;
 
       if (freshUser?.emailVerified) {
+        const idToken = await getIdToken(freshUser, true);
+
+        await fetch('/api/session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ idToken }),
+          credentials: 'include',
+        });
+
         setUser({
           uid: freshUser.uid,
           email: freshUser.email,
           displayName: freshUser.displayName || freshUser.email?.split('@')[0] || 'User',
         });
+
         toast.success(t('success'));
-        document.cookie = 'isAuth=true; path=/; max-age=3600; SameSite=Lax';
         router.replace('/', { locale });
       } else {
         toast.error(t('verify'));
@@ -86,7 +96,14 @@ export default function SignInPage() {
     try {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
-      await reload(user);
+
+      const idToken = await getIdToken(user, true);
+      await fetch('/api/session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ idToken }),
+        credentials: 'include',
+      });
 
       setUser({
         uid: user.uid,

@@ -4,7 +4,7 @@ import { signOut } from 'firebase/auth';
 import { auth } from '@/lib/firebase/client';
 import { useRouter } from '@/i18n/navigation';
 import { useLocale, useTranslations } from 'next-intl';
-import { useUserStore } from '@/store/userStore';
+import { useUserStore } from '@/store/useUserStore';
 
 export default function SignOutButton() {
   const router = useRouter();
@@ -21,7 +21,7 @@ export default function SignOutButton() {
   };
 
   return (
-    <button onClick={handleSignOut} className="btn inverted">
+    <button onClick={handleSignOut} className="btn-icon">
       {t('sign-out')}
     </button>
   );

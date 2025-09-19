@@ -10,10 +10,12 @@
     "description": "Could not find requested resource",
     "button": "Return Home"
   },
-  "home": { "hello": "Welcome to REST Client App", "welcome": "Welcome, " },
-  "header": {
-    "about": "About",
-    "main": "Main"
+  "home": {
+    "hello": "Welcome to REST Client App",
+    "welcome": "Welcome, ",
+    "about": "About the Project",
+    "description": "This application was created during the RS School React Course by the Boys-Not-Found team. It demonstrates how to work with RESTful APIs, handle requests, manage application state, and provide useful tools for developers. The project reflects our growth as developers and our passion for learning modern web technologies.",
+    "stack": "Tech Stack: Next.js, Tailwind CSS, Zustand, Firebase."
   },
   "navbar": { "history": "History", "variables": "Variables", "rest-client": "Rest-client" },
   "auth": {
@@ -41,7 +43,8 @@
     "verify-email": "Check your email inbox to verify your account",
     "no-account": "No account?",
     "create-one": "Create one",
-    "forgot-password": "Forgot password?"
+    "forgot-password": "Forgot password?",
+    "main": "Main"
   },
   "vars": {
     "title": "Variables",
@@ -53,6 +56,16 @@
     "value": "Value",
     "save": "Save",
     "cancel": "Cancel",
-    "no-variables": "No variables yet"
+    "no-variables": "No variables yet",
+    "exists": "Variable with this key already exists",
+    "added": "Variable added",
+    "deleted": "Variable deleted",
+    "cleared": "All variables cleared"
+  },
+  "history": {
+    "title": "History",
+    "no-requests": "No requests yet",
+    "loginRequired": "Please log in",
+    "rest": "Go to REST client"
   }
 }

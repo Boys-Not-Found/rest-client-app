@@ -16,6 +16,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
     notFound();
   }
   setRequestLocale(locale);
+
   return (
     <NextIntlClientProvider locale={locale}>
       <>
