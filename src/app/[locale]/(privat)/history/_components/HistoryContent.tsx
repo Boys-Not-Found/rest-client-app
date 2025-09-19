@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { TypeLocale } from '@/types';
 import HistoryList from './HistoryList';
+import { Link } from '@/i18n/navigation';
 
 type RequestRecord = {
   id: string;
@@ -26,7 +27,14 @@ export default async function HistoryContent({
   const t = await getTranslations('history');
 
   if (!requests.length) {
-    return <p>{t('no-requests')}</p>;
+    return (
+      <div className="text-center mt-10">
+        <p className="mb-4">{t('no-requests')}</p>
+        <Link href="/rest-client" className="underline">
+          REST client
+        </Link>
+      </div>
+    );
   }
 
   return <HistoryList requests={requests} />;
