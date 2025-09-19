@@ -1,5 +1,5 @@
 {
-  "*.{ts,tsx}": ["npm run format:fix", "npm run lint:fix"],
-  "*.{css,scss}": ["npm run scss:fix"],
+  "*.{ts,tsx}": ["npm run format", "npm run lint"],
+  "*.{css,scss}": ["npm run scss"],
   "*.{test,spec}.{ts,tsx}": ["npm run test"]
 }
