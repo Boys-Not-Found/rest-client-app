@@ -13,7 +13,8 @@
     "format:fix": "prettier --write .",
     "scss": "stylelint '**/*.{css,scss}'",
     "scss:fix": "stylelint '**/*.{css,scss}' --fix",
-    "test": "vitest run --coverage --passWithNoTests",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage --passWithNoTests",
     "test:watch": "vitest",
     "prepare": "husky"
   },

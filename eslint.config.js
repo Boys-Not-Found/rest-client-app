@@ -41,7 +41,6 @@ export default tseslint.config(
     files: ['**/*.test.{ts,tsx}'],
     rules: {
       '@typescript-eslint/consistent-type-assertions': 'warn',
-      '@typescript-eslint/no-magic-numbers': 'warn',
     },
   }
 );
