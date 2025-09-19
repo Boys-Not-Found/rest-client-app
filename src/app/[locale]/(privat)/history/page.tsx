@@ -2,7 +2,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { TypeLocale } from '@/types/types';
 import dynamic from 'next/dynamic';
 import Loader from '@/components/Loader/Loader';
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 
 type PropsHistoryPage = {
   params: Promise<{ locale: TypeLocale }>;
@@ -19,13 +19,16 @@ export default async function HistoryPage({ params }: PropsHistoryPage) {
   const t = await getTranslations('history');
   const cookieStore = await cookies();
   const cookieHeader = cookieStore.toString();
-
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? `http://${process.env.VERCEL_URL}`;
+  const h = await headers();
+  const host = h.get('host');
+  const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
+  const baseUrl = `${protocol}://${host}`;
 
   const res = await fetch(`${baseUrl}/api/history`, {
     cache: 'no-store',
     headers: { cookie: cookieHeader },
   });
+
   if (!res.ok) {
     return <p>{t('loginRequired')}</p>;
   }
