@@ -1,17 +1,6 @@
 import { Link } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
-
-type RequestRecord = {
-  id: string;
-  method: string;
-  url: string;
-  statusCode: number | null;
-  latency: number | null;
-  requestSize: number | null;
-  responseSize: number | null;
-  errorDetails: string | null;
-  requestTimestamp: string;
-};
+import type { RequestRecord } from '@/types/types';
 
 export default function HistoryList({ requests }: { requests: RequestRecord[] }) {
   const t = useTranslations('history');
@@ -25,15 +14,15 @@ export default function HistoryList({ requests }: { requests: RequestRecord[] })
       </div>
     );
   }
-
   return (
     <div className="max-w-4xl mx-auto p-6">
       <ul className="flex flex-col gap-4">
         {requests.map((req) => (
-          <li key={req.id} className="btn">
+          <li key={req.id} className="border p-4 rounded hover:bg-gray-700 transition">
             <Link
-              href={`/rest-client?method=${req.method}&url=${encodeURIComponent(req.url)}`}
-              className="block"
+              href={`/rest-client?method=${req.method}&url=${encodeURIComponent(req.url)}
+        &body=${encodeURIComponent(req.body || '')}
+        &headers=${encodeURIComponent(JSON.stringify(req.headers))}`}
             >
               <div className="flex justify-between mb-1">
                 <span className="font-mono font-semibold">{req.method}</span>

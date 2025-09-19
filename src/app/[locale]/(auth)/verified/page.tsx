@@ -39,7 +39,7 @@ export default function VerifiedPage() {
             });
 
             setStatus('success');
-            timer = setTimeout(() => router.replace(`/${locale}`), 2000);
+            timer = setTimeout(() => router.replace('/'), 2000);
           } catch {
             setStatus('fail');
           }

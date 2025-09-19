@@ -1,17 +1,17 @@
+import { setRequestLocale } from 'next-intl/server';
+import { TypeLocale } from '@/types/types';
 import HistoryList from './HistoryList';
+import type { RequestRecord } from '@/types/types';
 
-type RequestRecord = {
-  id: string;
-  method: string;
-  url: string;
-  statusCode: number | null;
-  latency: number | null;
-  requestSize: number | null;
-  responseSize: number | null;
-  errorDetails: string | null;
-  requestTimestamp: string;
-};
+export default async function HistoryContent({
+  requests,
+  params,
+}: {
+  requests: RequestRecord[];
+  params: { locale: TypeLocale };
+}) {
+  const { locale } = params;
+  setRequestLocale(locale);
 
-export default async function HistoryContent({ requests }: { requests: RequestRecord[] }) {
   return <HistoryList requests={requests} />;
 }
