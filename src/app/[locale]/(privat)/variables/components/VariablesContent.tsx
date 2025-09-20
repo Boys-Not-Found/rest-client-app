@@ -56,7 +56,11 @@ export default function VariablesContent() {
           <div key={v.key} className="flex justify-between input px-3 py-1">
             <p>{`{{${v.key}}}`}</p>
             <p>{v.value}</p>
-            <button className="btn-icon text-2xl" onClick={() => handleDelete(v.key)}>
+            <button
+              className="btn-icon text-2xl"
+              data-testid={`delete-${v.key}`}
+              onClick={() => handleDelete(v.key)}
+            >
               <LuDelete />
             </button>
           </div>
@@ -65,7 +69,7 @@ export default function VariablesContent() {
         <div className="flex justify-between gap-4 items-end">
           <input ref={keyRef} type="text" placeholder="key" className="input" name="key" />
           <input ref={valueRef} type="text" placeholder="value" className="input" name="value" />
-          <button className="btn-icon text-3xl" onClick={handleAdd}>
+          <button className="btn-icon text-3xl" onClick={handleAdd} data-testid="add">
             <MdOutlinePlaylistAdd />
           </button>
         </div>
