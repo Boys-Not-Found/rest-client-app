@@ -16,9 +16,10 @@ vi.mock('@/lib/variables', () => ({
   applyVariables: (val: string) => val,
 }));
 
-import { render, screen, fireEvent } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, beforeEach } from 'vitest';
 import HeadersEditor from '../[[...rest]]/components/HeadersEditor';
+import { renderWithIntl } from '@/test-utils/renderWithIntl';
 
 describe('HeadersEditor', () => {
   beforeEach(() => {
@@ -27,15 +28,15 @@ describe('HeadersEditor', () => {
   });
 
   it('renders the title and the existing header row', () => {
-    render(<HeadersEditor />);
+    renderWithIntl(<HeadersEditor />);
     expect(screen.getByText('Headers')).toBeInTheDocument();
     expect(screen.getByDisplayValue('Content-Type')).toBeInTheDocument();
     expect(screen.getByDisplayValue('application/json')).toBeInTheDocument();
   });
 
   it('calls setHeaders when "+ Add" is clicked', () => {
-    render(<HeadersEditor />);
-    fireEvent.click(screen.getByRole('button', { name: /\+ Add/i }));
+    renderWithIntl(<HeadersEditor />);
+    fireEvent.click(screen.getByRole('button', { name: /Add/i }));
     expect(store.setHeaders).toHaveBeenCalledTimes(1);
     const nextArg = store.setHeaders.mock.calls[0][0];
     expect(nextArg.length).toBe(2);
@@ -44,7 +45,7 @@ describe('HeadersEditor', () => {
   });
 
   it('updateHeader calls setHeaders with updated key/value', () => {
-    render(<HeadersEditor />);
+    renderWithIntl(<HeadersEditor />);
     const keyInput = screen.getByDisplayValue('Content-Type');
     fireEvent.change(keyInput, { target: { value: 'Accept' } });
 
@@ -60,7 +61,7 @@ describe('HeadersEditor', () => {
   });
 
   it('removeHeader calls setHeaders without the removed header', () => {
-    render(<HeadersEditor />);
+    renderWithIntl(<HeadersEditor />);
     const removeBtn = screen.getByTestId('remove-header');
     fireEvent.click(removeBtn);
     expect(store.setHeaders).toHaveBeenCalledTimes(1);

@@ -45,12 +45,12 @@ describe('<GeneratedCode />', () => {
   });
 
   it('shows generated snippet after successful fetch', async () => {
-    mockFetch.mockResolvedValueOnce(jsonResponse({ snippet: 'console.log("ok")' }));
+    mockFetch.mockResolvedValueOnce(jsonResponse({ snippet: 'snippet' }));
 
     render(<GeneratedCode />);
 
     await waitFor(() => {
-      expect(screen.getByText(/console\.log/)).toBeInTheDocument();
+      expect(screen.getByText(/snippet/)).toBeInTheDocument();
     });
   });
 

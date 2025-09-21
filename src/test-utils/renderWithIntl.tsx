@@ -33,6 +33,11 @@ export function renderWithIntl(ui: ReactNode, locale: string = 'en') {
     history: {
       title: 'History',
     },
+    client: {
+      title: 'Rest Client',
+      send: 'Send',
+      add: 'Add',
+    },
   };
   return render(
     <NextIntlClientProvider locale={locale} messages={messages}>

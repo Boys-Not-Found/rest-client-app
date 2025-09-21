@@ -2,8 +2,10 @@
 import { applyVariables } from '@/lib/variables';
 import { useRestStore } from '@/store/useRestStore';
 import { HeaderRow } from './HeaderRow';
+import { useTranslations } from 'next-intl';
 
 export default function HeadersEditor() {
+  const t = useTranslations('client');
   const headers = useRestStore((s) => s.headers);
   const setHeaders = useRestStore((s) => s.setHeaders);
 
@@ -23,7 +25,7 @@ export default function HeadersEditor() {
       <div className="flex justify-between items-center">
         <h3 className="font-medium">Headers</h3>
         <button type="button" onClick={addHeader} className="btn-icon">
-          + Add
+          {t('add')}
         </button>
       </div>
 

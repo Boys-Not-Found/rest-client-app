@@ -15,6 +15,4 @@ export type RequestRecord = {
     responseStatusText: string | null;
     errorDetails?: string | null;
   };
-
-  // headers?: Record<string, string>;
 };

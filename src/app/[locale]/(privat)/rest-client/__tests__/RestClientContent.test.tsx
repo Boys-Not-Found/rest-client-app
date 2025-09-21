@@ -1,6 +1,7 @@
-import { render, screen, waitFor, fireEvent } from '@testing-library/react';
+import { screen, waitFor, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import RestClientContent from '../[[...rest]]/components/RestClientContent';
+import { renderWithIntl } from '@/test-utils/renderWithIntl';
 
 vi.mock('next/navigation', () => ({
   useSearchParams: () => new URLSearchParams(),
@@ -64,7 +65,7 @@ vi.mock('../[[...rest]]/components/MethodSelector', () => ({
 
 describe('RestClientContent', () => {
   it('renders all UI elements', () => {
-    render(<RestClientContent />);
+    renderWithIntl(<RestClientContent />);
     expect(screen.getByRole('button', { name: 'Send' })).toBeInTheDocument();
     expect(screen.getByTestId('method-selector-mock')).toBeInTheDocument();
     expect(screen.getByText('EndpointInput')).toBeInTheDocument();
@@ -86,7 +87,7 @@ describe('RestClientContent', () => {
       ok: true,
     } as unknown as Response);
 
-    render(<RestClientContent />);
+    renderWithIntl(<RestClientContent />);
 
     fireEvent.click(screen.getByRole('button', { name: 'Send' }));
 

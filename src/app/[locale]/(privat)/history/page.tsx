@@ -37,7 +37,7 @@ export default async function HistoryPage({ params }: PropsHistoryPage) {
 
   return (
     <>
-      <h2 className="text-2xl font-bold mb-4">{t('title')}</h2>
+      <h2 className="text-2xl font-bold mb-4 text-orange-500">{t('title')}</h2>
       <HistoryContent requests={requests} params={{ locale }} />
     </>
   );

@@ -50,7 +50,7 @@ export default function VariablesContent() {
   };
   return (
     <>
-      <h1>{t('title')}</h1>
+      <h2 className="text-2xl font-bold mb-4 text-orange-500">{t('title')}</h2>
       {deferredVariables &&
         deferredVariables.map((v) => (
           <div key={v.key} className="flex justify-between input px-3 py-1">

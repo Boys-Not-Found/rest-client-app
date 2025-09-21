@@ -6,7 +6,7 @@ export default function MainPublicPage() {
   return (
     <>
       <section className="section">
-        <h1 className="text-3xl font-bold">{tH('hello')}</h1>
+        <h1 className="text-3xl font-bold text-orange-500">{tH('hello')}</h1>
       </section>
     </>
   );
