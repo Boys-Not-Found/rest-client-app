@@ -1,6 +1,6 @@
 'use client';
 
-import { Link } from '@heroui/react';
+import { Link } from '@/i18n/navigation';
 import Image from 'next/image';
 
 export function Footer() {
@@ -18,8 +18,8 @@ export function Footer() {
         <div className="flex flex-wrap justify-center gap-4">
           {authors.map((author) => (
             <Link
+              target="_blank"
               key={author.url}
-              isExternal
               href={author.url}
               className="btn-icon text-orange-500"
             >
@@ -28,7 +28,7 @@ export function Footer() {
           ))}
         </div>
 
-        <Link isExternal href="https://rs.school/courses/reactjs" className="btn-icon">
+        <Link target="_blank" href="https://rs.school/courses/reactjs" className="btn-icon">
           <Image src="/images/rss-logo.svg" alt="Course Logo" width={50} height={50} />
         </Link>
 

@@ -35,7 +35,7 @@
     "password": "Password",
     "sign-up": "Sign Up",
     "sign-in": "Sign In",
-    "sign-out": "Sign Out",
+    "sign_out": "Sign Out",
     "loading": "Loading...",
     "description": "Sign in to access your dashboard",
     "confirm-password": "Confirm Password",
