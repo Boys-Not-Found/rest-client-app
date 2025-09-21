@@ -17,7 +17,7 @@ const NavBar = () => {
         {t('variables')}
       </Link>
       <Link className="btn-icon" href="/rest-client" locale={locale}>
-        {t('rest-client')}
+        {t('rest_client')}
       </Link>
     </nav>
   );

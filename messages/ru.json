@@ -18,7 +18,7 @@
     "stack": "Стек технологий: Next.js, Tailwind CSS, Zustand, Firebase.",
     "loginRequired": "Необходимо войти в систему"
   },
-  "navbar": { "history": "История", "variables": "Переменные", "rest-client": "Rest-клиент" },
+  "navbar": { "history": "История", "variables": "Переменные", "rest_client": "Rest-клиент" },
   "auth": {
     "name": "Полное имя",
     "success": "Вы успешно вошли в систему!",
