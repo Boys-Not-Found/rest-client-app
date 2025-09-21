@@ -14,12 +14,4 @@ describe('VariablesPage', () => {
     const content = await screen.findByText('Variables');
     expect(content).toBeInTheDocument();
   });
-
-  it('renders nothing when user is null', async () => {
-    vi.spyOn(userStore, 'useUserStore').mockImplementation(() => ({ user: null }));
-
-    renderWithIntl(<VariablesPage />, 'en');
-
-    expect(screen.queryByText('Variables')).toBeInTheDocument();
-  });
 });

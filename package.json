@@ -14,12 +14,11 @@
     "scss": "stylelint '**/*.{css,scss}'",
     "scss:fix": "stylelint '**/*.{css,scss}' --fix",
     "test": "vitest run",
-    "test:coverage": "vitest run --coverage --passWithNoTests",
+    "test:coverage": "vitest --coverage --passWithNoTests",
     "test:watch": "vitest",
     "prepare": "husky"
   },
   "dependencies": {
-    "@heroui/react": "^2.8.4",
     "@hookform/resolvers": "^5.2.1",
     "@types/postman-collection": "^3.5.11",
     "clsx": "^2.1.1",

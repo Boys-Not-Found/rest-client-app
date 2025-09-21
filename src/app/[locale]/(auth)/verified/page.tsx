@@ -4,14 +4,12 @@ import { auth } from '@/lib/firebase/client';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useRouter } from '@/i18n/navigation';
 import { useEffect, useState } from 'react';
-import { useLocale } from 'next-intl';
 import { useUserStore } from '@/store/useUserStore';
 
 type Status = 'loading' | 'success' | 'fail';
 
 export default function VerifiedPage() {
   const router = useRouter();
-  const locale = useLocale();
   const setUser = useUserStore((state) => state.setUser);
   const [status, setStatus] = useState<Status>('loading');
 
@@ -55,7 +53,7 @@ export default function VerifiedPage() {
       unsubscribe();
       clearTimeout(timer);
     };
-  }, [router, locale, setUser]);
+  }, [router, setUser]);
 
   if (status === 'loading') {
     return (
