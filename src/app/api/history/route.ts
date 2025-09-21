@@ -57,6 +57,10 @@ export async function POST(req: Request) {
   const decoded = await adminAuth.verifySessionCookie(sessionCookie, true);
   const data = await req.json();
 
+  if (!data?.method || !data?.url) {
+    return NextResponse.json({ error: 'method and url required' }, { status: 400 });
+  }
+
   await adminDb.collection('requests').add({
     userId: decoded.uid,
     method: data.method,
