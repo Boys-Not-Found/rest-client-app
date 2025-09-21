@@ -14,7 +14,7 @@
     "scss": "stylelint '**/*.{css,scss}'",
     "scss:fix": "stylelint '**/*.{css,scss}' --fix",
     "test": "vitest run",
-    "test:coverage": "vitest run --coverage --passWithNoTests",
+    "test:coverage": "vitest --coverage --passWithNoTests",
     "test:watch": "vitest",
     "prepare": "husky"
   },

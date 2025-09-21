@@ -20,7 +20,10 @@ type Props = {
 export default async function RootLayout({ children }: Props) {
   return (
     <html>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body
+        data-testid="body"
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
         <Providers>
           {children}
           <Toaster position="top-center" reverseOrder={false} />

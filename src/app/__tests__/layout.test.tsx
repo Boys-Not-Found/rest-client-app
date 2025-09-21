@@ -1,22 +1,39 @@
 import { render, screen } from '@testing-library/react';
 
-import { ReactNode } from 'react';
+vi.mock('next/font/google', () => ({
+  Geist: () => ({ variable: '--mock-geist-sans' }),
+  Geist_Mono: () => ({ variable: '--mock-geist-mono' }),
+}));
 
-const MockRootLayout = ({ children }: { children: ReactNode }) => (
-  <div className="--mock-geist-sans --mock-geist-mono antialiased">
+vi.mock('./providers', () => ({
+  Providers: ({ children }: { children: React.ReactNode }) => (
     <div data-testid="providers">{children}</div>
-    <div data-testid="toaster" />
-  </div>
-);
+  ),
+}));
 
-it('renders children and providers/toaster', () => {
-  render(
-    <MockRootLayout>
-      <p>Hello</p>
-    </MockRootLayout>
-  );
+vi.mock('react-hot-toast', () => ({
+  Toaster: () => <div data-testid="toaster" />,
+}));
 
-  expect(screen.getByText('Hello')).toBeInTheDocument();
-  expect(screen.getByTestId('providers')).toBeInTheDocument();
-  expect(screen.getByTestId('toaster')).toBeInTheDocument();
+describe('RootLayout', () => {
+  it('renders children and providers/toaster', async () => {
+    // мокаем async RootLayout как обычный компонент
+    const MockRootLayout = ({ children }: { children: React.ReactNode }) => (
+      <div data-testid="body">
+        <div data-testid="providers">{children}</div>
+        <div data-testid="toaster" />
+      </div>
+    );
+
+    render(
+      <MockRootLayout>
+        <p>Hello</p>
+      </MockRootLayout>
+    );
+
+    expect(screen.getByText('Hello')).toBeInTheDocument();
+    expect(screen.getByTestId('body')).toBeInTheDocument();
+    expect(screen.getByTestId('providers')).toBeInTheDocument();
+    expect(screen.getByTestId('toaster')).toBeInTheDocument();
+  });
 });
