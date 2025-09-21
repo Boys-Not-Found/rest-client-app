@@ -104,7 +104,7 @@ export default function RestClientContent() {
 
   return (
     <div className="space-y-6 max-w-3xl p-4 mt-4 mx-auto">
-      <h2 className="text-2xl font-semibold">{t('title')}</h2>
+      <h2 className="text-2xl font-bold mb-4 text-orange-500">{t('title')}</h2>
       <div className="flex gap-3 items-start">
         <MethodSelector />
         <EndpointInput />
