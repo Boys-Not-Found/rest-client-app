@@ -1,7 +1,7 @@
 'use client';
 import { applyVariables } from '@/lib/variables';
 import { useRestStore } from '@/store/useRestStore';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function EndpointInput() {
   const url = useRestStore((s) => s.url);
@@ -9,6 +9,9 @@ export default function EndpointInput() {
 
   const [input, setInput] = useState(url);
 
+  useEffect(() => {
+    setInput(url ?? '');
+  }, [url]);
   const handleChange = (value: string) => {
     setInput(value);
     setUrl(applyVariables(value));
