@@ -10,7 +10,7 @@ export default function MainPrivatPage() {
   return (
     <>
       <section className="section flex flex-col gap-5">
-        <h1 className="text-2xl font-bold text-center">
+        <h1 className="text-2xl font-bold text-center text-orange-500">
           {t('welcome')}
           <span>{user?.displayName || 'user'}</span>
         </h1>

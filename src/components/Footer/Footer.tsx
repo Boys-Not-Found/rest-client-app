@@ -7,9 +7,9 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   const authors = [
-    { name: '@elena-v-volkova', url: 'https://github.com/elena-v-volkova' },
     { name: '@madii09', url: 'https://github.com/madii09' },
     { name: '@dzichonka', url: 'https://github.com/dzichonka' },
+    { name: '@elena-v-volkova', url: 'https://github.com/elena-v-volkova' },
   ];
 
   return (
