@@ -4,14 +4,14 @@ import { useRestClient } from '@/hooks/useRestClient';
 import { buildRestRoute } from '@/lib/rest-utils';
 import { useRestStore } from '@/store/useRestStore';
 
+import { useRouter } from '@/i18n/navigation';
+import { useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
 import BodyEditor from './BodyEditor';
 import EndpointInput from './EndpointInput';
 import GeneratedCode from './GeneratedCode';
 import HeadersEditor from './HeadersEditor';
 import MethodSelector from './MethodSelector';
-import { useRouter } from '@/i18n/navigation';
-import { useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
 
 export default function RestClientContent() {
   const searchParams = useSearchParams();
@@ -59,12 +59,18 @@ export default function RestClientContent() {
     const headersObj = Object.fromEntries(
       headersArr.map((h) => [h.key, h.value]).filter(([k]) => k)
     );
+
+    const reqBodyString = body ? JSON.stringify(body) : '';
+    const reqHeadersString = headersArr.length ? JSON.stringify(headersObj) : '';
+    const requestSize = new TextEncoder().encode(reqBodyString + reqHeadersString).length;
+
     const startTime = performance.now();
 
     await sendRequest();
     const latency = performance.now() - startTime;
 
     const resp = useRestStore.getState().response;
+    const respSize = resp?.data ? new TextEncoder().encode(JSON.stringify(resp.data)).length : 0;
 
     const path = buildRestRoute({
       method,
@@ -80,19 +86,15 @@ export default function RestClientContent() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          method,
-          url,
-          headers: headersObj,
-          body,
-          response: {
-            status: resp.status,
-            statusText: resp.statusText,
-            data: resp.data,
-            text: resp.text,
-            error: resp.error,
-          },
-          latency,
+          endpointUrl: url,
+          requestDuration: latency,
+          requestMethod: method,
+          requestSize,
           requestTimestamp: new Date().toISOString(),
+          responseSize: respSize,
+          responseStatusCode: resp.status,
+          responseStatusText: resp.statusText,
+          errorDetails: resp.error,
         }),
       });
     }

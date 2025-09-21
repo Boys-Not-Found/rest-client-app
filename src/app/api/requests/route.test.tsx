@@ -33,14 +33,17 @@ describe('POST /api/requests', () => {
   it('saves request and returns ok if cookie is valid', async () => {
     const mockUid = 'user123';
     const requestData = {
-      method: 'GET',
-      url: 'https://example.com',
+      endpointUrl: 'https://example.com',
+      requestMethod: 'GET',
       headers: { 'X-Test': '1' },
       body: '{}',
-      response: { status: 200, data: 'ok' },
+      responseStatusCode: 200,
+      responseBody: 'ok',
       requestSize: 50,
       responseSize: 100,
-      latency: 123,
+      requestDuration: 123,
+      errorDetails: null,
+      requestTimestamp: Date.now(),
     };
 
     (cookies as unknown as Mock).mockResolvedValue({
@@ -57,21 +60,11 @@ describe('POST /api/requests', () => {
     const res = await POST(req);
 
     expect(adminAuth.verifySessionCookie).toHaveBeenCalledWith('session_cookie_value', true);
-    expect(mockAdd).toHaveBeenCalledWith(
-      expect.objectContaining({
-        userId: mockUid,
-        method: requestData.method,
-        url: requestData.url,
-        headers: requestData.headers,
-        body: requestData.body,
-        responseStatus: 200,
-        responseBody: 'ok',
-        requestSize: 50,
-        responseSize: 100,
-        latency: 123,
-        error: null,
-      })
-    );
+    expect(mockAdd).toHaveBeenCalledWith({
+      userId: mockUid,
+      requestData,
+      requestTimestamp: requestData.requestTimestamp,
+    });
 
     expect(res.status).toBe(200);
     const json = await res.json();
