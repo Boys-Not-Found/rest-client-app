@@ -88,18 +88,31 @@ export default function SignUpPage() {
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
-          <input type="text" placeholder={t('name')} className="input" {...register('name')} />
+          <input
+            type="text"
+            aria-label="name"
+            placeholder={t('name')}
+            className="input"
+            {...register('name')}
+          />
           {errors.name && <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>}
         </div>
 
         <div>
-          <input type="email" placeholder={t('email')} className="input" {...register('email')} />
+          <input
+            type="email"
+            aria-label="email"
+            placeholder={t('email')}
+            className="input"
+            {...register('email')}
+          />
           {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>}
         </div>
 
         <div>
           <input
             type="password"
+            aria-label="password"
             placeholder={t('password')}
             className="input"
             {...register('password')}
@@ -112,6 +125,7 @@ export default function SignUpPage() {
         <div>
           <input
             type="password"
+            aria-label="confirm-password"
             placeholder={t('confirm-password')}
             className="input"
             {...register('confirmPassword')}
