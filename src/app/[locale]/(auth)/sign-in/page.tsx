@@ -1,0 +1,191 @@
+'use client';
+
+import { useRouter, Link } from '@/i18n/navigation';
+import { auth, googleProvider } from '@/lib/firebase/client';
+import { useUserStore } from '@/store/useUserStore';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { FirebaseError } from 'firebase/app';
+import {
+  reload,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  getIdToken,
+} from 'firebase/auth';
+import { useLocale, useTranslations } from 'next-intl';
+import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import { FcGoogle } from 'react-icons/fc';
+import { z } from 'zod';
+
+const schema = z.object({
+  email: z.string().email('Enter a valid email'),
+  password: z.string().min(8, 'Password must be at least 8 characters'),
+});
+type FormData = z.infer<typeof schema>;
+
+export default function SignInPage() {
+  const t = useTranslations('auth');
+  const router = useRouter();
+  const locale = useLocale();
+  const setUser = useUserStore((state) => state.setUser);
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors, isSubmitting },
+  } = useForm<FormData>({
+    resolver: zodResolver(schema),
+  });
+
+  const onSubmit = async ({ email, password }: FormData) => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      await reload(user);
+      const freshUser = auth.currentUser;
+
+      if (freshUser?.emailVerified) {
+        const idToken = await getIdToken(freshUser, true);
+
+        await fetch('/api/session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ idToken }),
+          credentials: 'include',
+        });
+
+        setUser({
+          uid: freshUser.uid,
+          email: freshUser.email,
+          displayName: freshUser.displayName || freshUser.email?.split('@')[0] || 'User',
+        });
+
+        toast.success(t('success'));
+        router.replace('/', { locale });
+      } else {
+        toast.error(t('verify'));
+        await auth.signOut();
+      }
+    } catch (err: unknown) {
+      if (err instanceof FirebaseError) {
+        switch (err.code) {
+          case 'auth/invalid-email':
+            toast.error(t('invalid-email'));
+            break;
+          case 'auth/user-not-found':
+          case 'auth/wrong-password':
+          case 'auth/invalid-credential':
+            toast.error(t('invalid-credentials'));
+            break;
+          case 'auth/too-many-requests':
+            toast.error(t('too-many-requests'));
+            break;
+          default:
+            toast.error(t('fail'));
+        }
+      } else {
+        toast.error(t('fail'));
+      }
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+
+      const idToken = await getIdToken(user, true);
+      await fetch('/api/session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ idToken }),
+        credentials: 'include',
+      });
+
+      setUser({
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName || user.email?.split('@')[0] || 'User',
+      });
+
+      toast.success(t('google success'));
+      router.replace('/', { locale });
+    } catch (err: unknown) {
+      if (err instanceof FirebaseError) {
+        toast.error(err.message);
+      } else {
+        toast.error(t('google fail'));
+      }
+    }
+  };
+
+  const handleForgotPassword = async () => {
+    const email = watch('email');
+    if (!email) {
+      toast.error(t('enter-email-first'));
+      return;
+    }
+    try {
+      await sendPasswordResetEmail(auth, email);
+      toast.success(t('reset-email-sent'));
+    } catch (err: unknown) {
+      if (err instanceof FirebaseError) {
+        toast.error(err.message);
+      } else {
+        toast.error(t('fail'));
+      }
+    }
+  };
+
+  return (
+    <>
+      <h1 className="mb-6 text-2xl text-center font-semibold">{t('sign-in')}</h1>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <div>
+          <input type="email" placeholder={t('email')} className="input" {...register('email')} />
+          {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>}
+        </div>
+
+        <div>
+          <input
+            type="password"
+            placeholder={t('password')}
+            className="input"
+            {...register('password')}
+          />
+          {errors.password && (
+            <p className="mt-1 text-sm text-red-600">{errors.password.message}</p>
+          )}
+        </div>
+
+        <p
+          onClick={handleForgotPassword}
+          className="cursor-pointer text-sm text-blue-600 hover:underline"
+        >
+          {t('forgot-password')}
+        </p>
+
+        <button disabled={isSubmitting} className="btn inverted">
+          {isSubmitting ? t('loading') : t('sign-in')}
+        </button>
+      </form>
+
+      <div className="mt-6">
+        <button onClick={handleGoogleSignIn} className="btn inverted">
+          <FcGoogle className="text-xl" />
+          <span>{t('google')}</span>
+        </button>
+      </div>
+
+      <p className="mt-4 text-center text-sm text-gray-600">
+        {t('no-account')}{' '}
+        <Link href="/sign-up" locale={locale} className="underline text-black">
+          {t('create-one')}
+        </Link>
+      </p>
+    </>
+  );
+}

@@ -1,0 +1,78 @@
+{
+  "error": {
+    "404": "Page not found",
+    "500": "Internal server error",
+    "default": "Something went wrong",
+    "button": "Try again"
+  },
+  "NotFoundPage": {
+    "title": "Page not found",
+    "description": "Could not find requested resource",
+    "button": "Return Home"
+  },
+  "home": {
+    "hello": "Welcome to REST Client App",
+    "welcome": "Welcome, ",
+    "about": "About the Project",
+    "description": "This application was created during the RS School React Course by the Boys-Not-Found team. It demonstrates how to work with RESTful APIs, handle requests, manage application state, and provide useful tools for developers. The project reflects our growth as developers and our passion for learning modern web technologies.",
+    "stack": "Tech Stack: Next.js, Tailwind CSS, Zustand, Firebase.",
+    "we": "Наша команда Boys-Not-Found in LinkedIn"
+  },
+  "navbar": { "history": "History", "variables": "Variables", "rest_client": "Rest-client" },
+  "auth": {
+    "name": "Full Name",
+    "success": "Signed in!",
+    "fail": "Something went wrong",
+    "invalid-email": "Invalid email address",
+    "invalid-credentials": "Invalid email or password",
+    "user-not-found": "No account found with this email",
+    "wrong-password": "Incorrect password",
+    "too-many-requests": "Too many attempts, please try again later",
+    "verify": "Please verify!",
+    "google": "Sign in with Google",
+    "google success": "Signed in with Google!",
+    "google fail": "Google sign in failed",
+    "email": "Email",
+    "password": "Password",
+    "sign-up": "Sign Up",
+    "sign-in": "Sign In",
+    "sign_out": "Sign Out",
+    "loading": "Loading...",
+    "description": "Sign in to access your dashboard",
+    "confirm-password": "Confirm Password",
+    "passwords-dont-match": "Passwords do not match",
+    "verify-email": "Check your email inbox to verify your account",
+    "no-account": "No account?",
+    "create-one": "Create one",
+    "forgot-password": "Forgot password?",
+    "main": "Main"
+  },
+  "vars": {
+    "title": "Variables",
+    "add": "Add variable",
+    "delete": "Delete variable",
+    "clear": "Clear all variables",
+    "edit": "Edit variable",
+    "key": "Key",
+    "value": "Value",
+    "save": "Save",
+    "cancel": "Cancel",
+    "no-variables": "No variables yet",
+    "exists": "Variable with this key already exists",
+    "added": "Variable added",
+    "deleted": "Variable deleted",
+    "cleared": "All variables cleared"
+  },
+  "history": {
+    "title": "History",
+    "no-requests": "You have not executed any requests yet. Try:",
+    "loginRequired": "Please log in",
+    "rest": "Go to REST client"
+  },
+  "client": {
+    "title": "REST Client",
+    "send": "Send",
+    "sending": "Sending...",
+    "add": "+ Add"
+  }
+}
