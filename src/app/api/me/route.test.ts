@@ -1,44 +1,29 @@
 import { cookies } from 'next/headers';
-import { adminAuth } from '@/lib/firebase/admin';
 import { vi, Mock } from 'vitest';
 import { GET } from './route';
 
 vi.mock('next/headers', () => ({ cookies: vi.fn() }));
-vi.mock('@/lib/firebase/admin', () => ({
-  adminAuth: { verifySessionCookie: vi.fn() },
-}));
 
 describe('GET /api/me', () => {
-  it('returns null if no cookie', async () => {
+  it('returns authenticated: false if no cookie', async () => {
     (cookies as unknown as Mock).mockResolvedValue({
       get: () => undefined,
     });
 
     const res = await GET();
     const data = await res.json();
-    expect(data.user).toBeNull();
+
+    expect(data).toEqual({ authenticated: false });
   });
 
-  it('returns user if cookie is valid', async () => {
-    const mockUser = {
-      uid: '123',
-      aud: 'test-aud',
-      auth_time: Date.now() / 1000,
-      exp: Date.now() / 1000 + 3600,
-      firebase: {},
-      iss: 'test-issuer',
-      sub: 'test-sub',
-      iat: Date.now() / 1000,
-    };
-
+  it('returns authenticated: true if cookie exists', async () => {
     (cookies as unknown as Mock).mockResolvedValue({
-      get: () => ({ value: 'token' }),
+      get: () => ({ name: 'session', value: 'abc123' }),
     });
-
-    (adminAuth.verifySessionCookie as unknown as Mock).mockResolvedValue(mockUser);
 
     const res = await GET();
     const data = await res.json();
-    expect(data.user).toEqual(mockUser);
+
+    expect(data).toEqual({ authenticated: true });
   });
 });

@@ -16,7 +16,7 @@ export default function SignOutButton() {
   const handleSignOut = async () => {
     await signOut(auth);
     setUser(null);
-    document.cookie = 'isAuth=; path=/; max-age=0';
+    await fetch('/api/signout', { method: 'POST', credentials: 'include' });
     router.replace('/', { locale: locale });
   };
 
