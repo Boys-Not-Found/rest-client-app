@@ -19,17 +19,31 @@ describe('middleware', () => {
     expect(response).toEqual(NextResponse.next());
   });
 
-  it('redirects to not-found when not authenticated', () => {
+  it('redirects to / when not authenticated on private route', () => {
     const request = createRequest('http://localhost/en/variables');
     const response = middleware(request) as NextResponse;
 
-    expect(response.headers.get('x-middleware-rewrite')).toContain('/en/not-found');
+    expect(response.headers.get('location')).toContain('/en/');
   });
 
-  it('allows public route without auth', () => {
-    const request = createRequest('http://localhost/en/public');
+  it('allows access to unrelated public route', () => {
+    const request = createRequest('http://localhost/en/some-public-page');
     const response = middleware(request);
 
     expect(response).toEqual(NextResponse.next());
+  });
+
+  it('redirects authenticated user away from /sign-in', () => {
+    const request = createRequest('http://localhost/en/sign-in', 'session=abc');
+    const response = middleware(request) as NextResponse;
+
+    expect(response.headers.get('location')).toContain('/en/');
+  });
+
+  it('redirects authenticated user away from /sign-up', () => {
+    const request = createRequest('http://localhost/en/sign-up', 'session=abc');
+    const response = middleware(request) as NextResponse;
+
+    expect(response.headers.get('location')).toContain('/en/');
   });
 });
