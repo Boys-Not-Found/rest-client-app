@@ -1,10 +1,8 @@
-// ── Hoisted variables for Vitest mocks ─────────────────────────────────────────
 const store = vi.hoisted(() => ({
   method: 'GET',
   setMethod: vi.fn<(value: string) => void>(),
 }));
 
-// ── Mocks ──────────────────────────────────────────────────────────────────────
 vi.mock('@/store/useRestStore', () => ({
   useRestStore: (selector: (s: { method: string; setMethod: (v: string) => void }) => unknown) =>
     selector({ method: store.method, setMethod: store.setMethod }),
