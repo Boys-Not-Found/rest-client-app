@@ -1,7 +1,7 @@
 'use client';
 import { applyVariables } from '@/lib/variables';
 import { useRestStore } from '@/store/useRestStore';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function BodyEditor() {
   const body = useRestStore((s) => s.body);
@@ -9,6 +9,9 @@ export default function BodyEditor() {
 
   const [input, setInput] = useState(body);
 
+  useEffect(() => {
+    setInput(body ?? '');
+  }, [body]);
   const handleChange = (value: string) => {
     setInput(value);
     setBody(applyVariables(value));
