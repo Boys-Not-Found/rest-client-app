@@ -1,6 +1,6 @@
-import { NextResponse } from 'next/server';
-import { adminDb, adminAuth } from '@/lib/firebase/admin';
+import { adminAuth, adminDb } from '@/lib/firebase/admin';
 import { cookies } from 'next/headers';
+import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
   const cookieStore = await cookies();
@@ -15,17 +15,8 @@ export async function POST(req: Request) {
 
   await adminDb.collection('requests').add({
     userId: decoded.uid,
-    method: data.method,
-    url: data.url,
-    headers: data.headers,
-    body: data.body,
-    responseStatus: data.response?.status ?? null,
-    responseBody: data.response?.data ?? null,
-    requestSize: data.requestSize ?? null,
-    responseSize: data.responseSize ?? null,
-    latency: data.latency ?? null,
-    error: data.response?.error ?? null,
-    requestTimestamp: new Date(),
+    requestData: data,
+    requestTimestamp: data.requestTimestamp,
   });
 
   return NextResponse.json({ status: 'ok' });
