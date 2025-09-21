@@ -1,7 +1,6 @@
 import { NextIntlClientProvider } from 'next-intl';
 import { render } from '@testing-library/react';
 import { ReactNode } from 'react';
-import { send } from 'process';
 
 export function renderWithIntl(ui: ReactNode, locale: string = 'en') {
   const messages = {
