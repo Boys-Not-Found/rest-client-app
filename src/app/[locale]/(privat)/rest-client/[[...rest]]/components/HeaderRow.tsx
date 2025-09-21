@@ -39,7 +39,7 @@ export function HeaderRow({ keyValue, value, onChange, onRemove }: HeaderRowProp
         placeholder="Header value"
         className="input"
       />
-      <button type="button" onClick={onRemove} className="btn-icon">
+      <button type="button" data-testid="remove-header" onClick={onRemove} className="btn-icon">
         ✕
       </button>
     </div>
