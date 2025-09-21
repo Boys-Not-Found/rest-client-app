@@ -12,8 +12,10 @@ import EndpointInput from './EndpointInput';
 import GeneratedCode from './GeneratedCode';
 import HeadersEditor from './HeadersEditor';
 import MethodSelector from './MethodSelector';
+import { useTranslations } from 'next-intl';
 
 export default function RestClientContent() {
+  const t = useTranslations('client');
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -102,11 +104,12 @@ export default function RestClientContent() {
 
   return (
     <div className="space-y-6 max-w-3xl p-4 mt-4 mx-auto">
+      <h2 className="text-2xl font-semibold">{t('title')}</h2>
       <div className="flex gap-3 items-start">
         <MethodSelector />
         <EndpointInput />
         <button onClick={onSend} disabled={loading} className="btn">
-          {loading ? 'Sending…' : 'Send'}
+          {loading ? `${t('sending')}` : `${t('send')}`}
         </button>
       </div>
 
