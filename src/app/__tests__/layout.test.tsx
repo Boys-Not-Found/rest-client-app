@@ -17,7 +17,6 @@ vi.mock('react-hot-toast', () => ({
 
 describe('RootLayout', () => {
   it('renders children and providers/toaster', async () => {
-    // мокаем async RootLayout как обычный компонент
     const MockRootLayout = ({ children }: { children: React.ReactNode }) => (
       <div data-testid="body">
         <div data-testid="providers">{children}</div>

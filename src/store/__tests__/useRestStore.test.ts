@@ -2,7 +2,6 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { useRestStore } from '../useRestStore';
 
 describe('useRestStore', () => {
-  // Сбрасываем store перед каждым тестом
   beforeEach(() => {
     useRestStore.getState().reset();
   });

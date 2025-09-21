@@ -4,12 +4,10 @@ import HistoryList from '../_components/HistoryList';
 import type { RequestRecord } from '@/types/types';
 import type { PropsWithChildren } from 'react';
 
-// Mock next-intl
 vi.mock('next-intl', () => ({
   useTranslations: () => (key: string) => key,
 }));
 
-// Mock Link
 vi.mock('@/i18n/navigation', () => ({
   Link: ({ children, ...props }: PropsWithChildren<{ href: string }>) => (
     <a {...props}>{children}</a>
@@ -62,17 +60,14 @@ describe('HistoryList', () => {
 
     render(<HistoryList requests={requests} />);
 
-    // There should be two links
     expect(screen.getAllByRole('link')).toHaveLength(2);
 
-    // Check first request
     expect(screen.getByText('POST')).toBeInTheDocument();
     expect(screen.getByText('https://api.example.com')).toBeInTheDocument();
     expect(screen.getByText('Status: 200 | Latency: 123 ms')).toBeInTheDocument();
     expect(screen.getByText('Request size: 100')).toBeInTheDocument();
     expect(screen.getByText('Response size: 200')).toBeInTheDocument();
 
-    // Check second request
     expect(screen.getByText('GET')).toBeInTheDocument();
     expect(screen.getByText('https://api.example2.com')).toBeInTheDocument();
     expect(screen.getByText('Status: 404 | Latency: 50 ms')).toBeInTheDocument();
